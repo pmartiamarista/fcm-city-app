@@ -9,25 +9,22 @@ import { graphql } from '@/graphql/config/client';
 export const fetchCityById = async (id: string) => {
   try {
     const response = await graphql.getCity({ id });
-    return response.City;
+    return response?.City ?? null;
   } catch {
-    // Return null if the city could not be fetched or an error occurred
     return null;
   }
 };
 
 /**
  * Fetches a list of all available cities.
- * Executes the 'GetCities' GraphQL query.
  *
  * @returns An array of city objects; returns an empty array if an error occurs.
  */
 export const fetchAllCities = async () => {
   try {
     const response = await graphql.GetCities();
-    return response.allCities;
+    return response?.allCities ?? [];
   } catch {
-    // Return an empty array to prevent application crashes on failure
     return [];
   }
 };
