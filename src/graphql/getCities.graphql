@@ -1,0 +1,8 @@
+query GetCities {
+  allCities {
+    id
+    key
+    name
+    nativeName
+  }
+}

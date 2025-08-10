@@ -12,28 +12,37 @@
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit --incremental false",
-    "dev:clean": "rm -rf node_modules yarn.lock package-lock.json && yarn cache clean --force && yarn install",
+    "dev:clean": "rm -rf node_modules yarn.lock android ios .expo && yarn cache clean && yarn install",
     "dev:check": "prettier --w ./ && yarn typecheck && yarn lint --fix",
     "prepare": "husky",
     "test": "jest --passWithNoTests",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "gen": "graphql-codegen",
+    "gen:watch": "graphql-codegen --watch"
   },
   "dependencies": {
     "expo": "~53.0.20",
     "expo-status-bar": "~2.2.3",
     "expo-system-ui": "~5.0.10",
     "expo-updates": "~0.28.17",
+    "graphql": "^16.11.0",
+    "graphql-request": "^7.2.0",
     "react": "19.0.0",
-    "react-native": "0.79.5"
+    "react-native": "0.79.5",
+    "zod": "^4.0.17"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.2",
+    "@graphql-codegen/cli": "^5.0.7",
+    "@graphql-codegen/typescript": "^4.1.6",
+    "@graphql-codegen/typescript-graphql-request": "^6.3.0",
+    "@graphql-codegen/typescript-operations": "^4.6.1",
     "@testing-library/jest-native": "^5.4.3",
     "@testing-library/react-native": "^13.2.2",
     "@types/jest": "^30.0.0",
     "@types/react": "~19.0.0",
     "@typescript-eslint/eslint-plugin": "^8.38.0",
     "@typescript-eslint/parser": "^8.38.0",
+    "babel-plugin-module-resolver": "^5.0.2",
     "eslint": "^9.32.0",
     "eslint-config-expo": "^9.2.0",
     "eslint-config-prettier": "^10.1.8",
@@ -51,7 +60,7 @@
     "prettier": "^3.6.2",
     "react-test-renderer": "19.0.0",
     "ts-jest": "^29.4.1",
-    "typescript": "~5.8.3",
+    "typescript": "^5.9.2",
     "typescript-eslint": "^8.38.0"
   },
   "lint-staged": {

@@ -30,7 +30,9 @@
     "extra": {
       "eas": {
         "projectId": "6c32dcf9-0c08-4f08-8f97-a836327d6b08"
-      }
+      },
+      "API_URL": "https://my-graphql-app-dev.up.railway.app/graphql",
+      "AUTH_TOKEN": "UG9ycXVlIEplaG92w6EgZXMgRGlvcyBncmFuZGUsIFkgUmV5IGdyYW5kZSBzb2JyZSB0b2RvcyBsb3MgZGlvc2VzLg"
     },
     "runtimeVersion": {
       "policy": "appVersion"
