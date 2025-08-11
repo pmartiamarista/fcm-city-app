@@ -4,7 +4,7 @@ import { RootState, useAppDispatch, useAppSelector } from '@/store';
 import { CITY, cityAsyncThunks } from '@/store/slices/cityActions';
 import { citySliceActions } from '@/store/slices/citySlice';
 
-import { getStatus } from '@/utils/getStatus/getStatus';
+import { useStatus } from '../useStatus';
 
 const getState = (state: RootState) => state[CITY].allCities;
 
@@ -23,7 +23,7 @@ export const useAllCities = () => {
   return {
     state: {
       ...state,
-      ...getStatus({ status: state.status, data: state.list }),
+      ...useStatus({ status: state.status, data: state.list }),
     },
     actions: {
       loadAllCities,

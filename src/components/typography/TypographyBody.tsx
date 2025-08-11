@@ -1,17 +1,16 @@
 import { FC, memo } from 'react';
 import { Text, TextProps } from 'react-native';
 
-import { appColors } from '../design-system/colors';
-import { appThemeMode } from '../design-system/theme';
+import { appColors } from '../design-system/colorsTypes';
 import {
   BodySize,
   bodyStylesBySize,
   DefaultFontType,
   defaultTypographyStyles,
   fontFamilyByWeight,
-  typographyColorByMode,
+  textDefaultColor,
   typographyDefaultProps,
-} from '../design-system/typography';
+} from '../design-system/typographyTypes';
 
 export interface TypographyBodyProps
   extends TextProps,
@@ -22,23 +21,18 @@ const TypographyBody: FC<TypographyBodyProps> = memo(
     size = 'md',
     weight = 'rg',
     style,
-    textColor,
+    textColor = textDefaultColor,
     noLineHeight,
     isLink,
     disabled,
     ...props
   }) => {
-    const themeMode = appThemeMode;
-    const color = textColor
-      ? appColors[textColor]
-      : appColors[typographyColorByMode[themeMode]];
-
     return (
       <Text
         {...typographyDefaultProps}
         {...props}
         style={[
-          { color },
+          { color: appColors[textColor] },
           style,
           {
             fontSize: bodyStylesBySize[size].fontSize,

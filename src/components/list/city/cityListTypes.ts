@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { appColors } from '@/components/design-system/colors';
+import { appColors } from '@/components/design-system/colorsTypes';
 import { appRadius } from '@/components/design-system/radiusTypes';
 import { appShadows } from '@/components/design-system/shadowTypes';
 import { appSpacing } from '@/components/design-system/spacingTypes';

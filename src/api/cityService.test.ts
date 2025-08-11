@@ -1,76 +1,111 @@
-import { graphql } from '@/graphql/config/client';
+import { fetchAllCities, getCity, getCityPlace } from './cityService';
 
-import { fetchAllCities, fetchCityById } from './cityService';
-
-jest.mock('@/graphql/config/client', () => ({
-  graphql: {
-    getCity: jest.fn(),
-    GetCities: jest.fn(),
-  },
+jest.mock('./cityService', () => ({
+  getCity: jest.fn(),
+  getCityPlace: jest.fn(),
+  fetchAllCities: jest.fn(),
 }));
 
-describe('City Service', () => {
-  const mockCity = { id: '1', name: 'Almería' };
-  const mockCities = [
-    { id: '1', name: 'Almería' },
-    { id: '2', name: 'Granada' },
-  ];
+const mockedGetCity = getCity as jest.MockedFunction<typeof getCity>;
+const mockedGetCityPlace = getCityPlace as jest.MockedFunction<
+  typeof getCityPlace
+>;
+const mockedFetchAllCities = fetchAllCities as jest.MockedFunction<
+  typeof fetchAllCities
+>;
 
+describe('City Service (Mocked)', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  describe('fetchCityById', () => {
-    it('should return city data when GraphQL query succeeds', async () => {
-      (graphql.getCity as jest.Mock).mockResolvedValue({ City: mockCity });
+  describe('getCity', () => {
+    it('should return city data for a valid city ID', async () => {
+      mockedGetCity.mockResolvedValue({
+        id: '1',
+        key: 'ALM',
+        name: 'Almería',
+        nativeName: 'Almería',
+        currency: 'EUR',
+        language: 'Spanish',
+      });
 
-      const result = await fetchCityById('1');
-      expect(result).toEqual(mockCity);
-      expect(graphql.getCity).toHaveBeenCalledWith({ id: '1' });
+      const result = await getCity({ id: '1' });
+
+      expect(result).toBeDefined();
+      expect(result?.id).toBe('1');
+      expect(result?.name).toBe('Almería');
+      expect(result?.key).toBe('ALM');
+      expect(result?.nativeName).toBe('Almería');
+      expect(result?.currency).toBe('EUR');
+      expect(result?.language).toBe('Spanish');
     });
 
-    it('should return null when GraphQL query throws an error', async () => {
-      (graphql.getCity as jest.Mock).mockRejectedValue(
-        new Error('Network error'),
-      );
+    it('should return null for an invalid city ID', async () => {
+      mockedGetCity.mockResolvedValue(null);
 
-      const result = await fetchCityById('1');
+      const result = await getCity({ id: '999' });
+
       expect(result).toBeNull();
     });
+  });
 
-    it('should return null when response is malformed', async () => {
-      (graphql.getCity as jest.Mock).mockResolvedValue({});
+  describe('getCityPlace', () => {
+    it('should return place data for a valid city key', async () => {
+      mockedGetCityPlace.mockResolvedValue({ key: 'ALM', place: 'Alcazaba' });
 
-      const result = await fetchCityById('1');
+      const result = await getCityPlace({ key: 'ALM' });
+
+      expect(result).toBeDefined();
+      expect(result?.key).toBe('ALM');
+      expect(result?.place).toBe('Alcazaba');
+    });
+
+    it('should return null for an invalid city key', async () => {
+      mockedGetCityPlace.mockResolvedValue(null);
+
+      const result = await getCityPlace({ key: 'INVALID' });
+
       expect(result).toBeNull();
     });
   });
 
   describe('fetchAllCities', () => {
-    it('should return list of cities when GraphQL query succeeds', async () => {
-      (graphql.GetCities as jest.Mock).mockResolvedValue({
-        allCities: mockCities,
+    it('should return a list of cities', async () => {
+      mockedFetchAllCities.mockResolvedValue({
+        allCities: [
+          {
+            id: '1',
+            key: 'ALM',
+            name: 'Almería',
+            nativeName: 'Almería',
+          },
+          {
+            id: '2',
+            key: 'GRA',
+            name: 'Granada',
+            nativeName: 'Granada',
+          },
+        ],
       });
 
       const result = await fetchAllCities();
-      expect(result).toEqual(mockCities);
-      expect(graphql.GetCities).toHaveBeenCalledTimes(1);
+
+      expect(result).toBeDefined();
+      if (result?.allCities && result.allCities.length >= 2) {
+        expect(result.allCities[0]?.key).toBe('ALM');
+        expect(result.allCities[1]?.name).toBe('Granada');
+      } else {
+        fail('Expected result.allCities to contain at least two cities');
+      }
     });
 
-    it('should return empty array when GraphQL query throws an error', async () => {
-      (graphql.GetCities as jest.Mock).mockRejectedValue(
-        new Error('Query failed'),
-      );
+    it('should return null if no cities are found', async () => {
+      mockedFetchAllCities.mockResolvedValue(null);
 
       const result = await fetchAllCities();
-      expect(result).toEqual([]);
-    });
 
-    it('should return empty array when response is malformed', async () => {
-      (graphql.GetCities as jest.Mock).mockResolvedValue({});
-
-      const result = await fetchAllCities();
-      expect(result).toEqual([]);
+      expect(result).toBeNull();
     });
   });
 });

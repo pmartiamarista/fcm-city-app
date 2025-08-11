@@ -246,6 +246,15 @@ export type GetCityQuery = {
   } | null;
 };
 
+export type GetCityPlaceQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+export type GetCityPlaceQuery = {
+  __typename?: 'Query';
+  Place?: { __typename?: 'Place'; key: string; place: any } | null;
+};
+
 export const GetCitiesDocument = gql`
   query GetCities {
     allCities {
@@ -265,6 +274,14 @@ export const GetCityDocument = gql`
       nativeName
       currency
       language
+    }
+  }
+`;
+export const GetCityPlaceDocument = gql`
+  query getCityPlace($id: ID!) {
+    Place(id: $id) {
+      key
+      place
     }
   }
 `;
@@ -320,6 +337,24 @@ export function getSdk(
             signal,
           }),
         'getCity',
+        'query',
+        variables,
+      );
+    },
+    getCityPlace(
+      variables: GetCityPlaceQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+      signal?: RequestInit['signal'],
+    ): Promise<GetCityPlaceQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<GetCityPlaceQuery>({
+            document: GetCityPlaceDocument,
+            variables,
+            requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders },
+            signal,
+          }),
+        'getCityPlace',
         'query',
         variables,
       );

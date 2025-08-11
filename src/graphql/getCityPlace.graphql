@@ -1,0 +1,6 @@
+query getCityPlace($id: ID!) {
+  Place(id: $id) {
+    key
+    place
+  }
+}

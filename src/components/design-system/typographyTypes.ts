@@ -1,7 +1,6 @@
 import { StyleSheet, TextProps, TextStyle } from 'react-native';
 
-import { AppColor, appColors } from './colors';
-import { AppThemeMode } from './theme';
+import { AppColor, appColors } from './colorsTypes';
 
 export const typographyDefaultProps: TextProps = {
   allowFontScaling: true,
@@ -19,10 +18,7 @@ export const typographyStyles = StyleSheet.create({
   },
 });
 
-export const typographyColorByMode: Record<AppThemeMode, AppColor> = {
-  dark: 'neutral50',
-  light: 'mainDeepBlue700',
-};
+export const textDefaultColor = 'mainDeepBlue700';
 
 export type FontWeight = 'rg' | 'md';
 

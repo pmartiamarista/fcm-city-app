@@ -9,13 +9,24 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { appGradientRgbColors } from '@/components/design-system/gradientsTypes';
 import { appSpacing } from '@/components/design-system/spacingTypes';
+import Skeleton from '@/components/skeleton/Skeleton';
 
 import { roundedContainerRadius } from './layoutTypes';
 
-type ImageHeaderProps = ImageBackgroundProps;
+import { Statuses } from '@/types/types';
 
-const ImageHeader: FC<ImageHeaderProps> = ({ children, ...props }) => {
+type ImageHeaderProps = ImageBackgroundProps & Pick<Statuses, 'isLoaded'>;
+
+const ImageHeader: FC<ImageHeaderProps> = ({
+  children,
+  isLoaded,
+  ...props
+}) => {
   const { top } = useSafeAreaInsets();
+
+  if (!isLoaded) {
+    return <Skeleton style={styles.image} />;
+  }
 
   return (
     <>

@@ -1,22 +1,22 @@
 import { FC, useEffect } from 'react';
 import { FlatList, FlatListProps, StyleSheet, View } from 'react-native';
 
-import { useAllCities } from '@/hooks/useAllCities';
+import { useAllCities } from '@/hooks/city/useAllCities';
 
 import { appSpacing } from '@/components/design-system/spacingTypes';
 import ErrorMessage from '@/components/ErrorMessage';
 
-import { City } from '@/graphql/__generated__/graphql';
+import { GetCitiesQuery } from '@/graphql/__generated__/graphql';
 
 import CityListItem from './tile/CityListItem';
 import CityListItemSkeletons from './tile/CityListItemSkeletons';
 import ListEmptyMessage from '../ListEmptyMessage';
 import ListSeparator from '../ListSeparator';
 
-const List = FlatList<City>;
+const List = FlatList<NonNullable<GetCitiesQuery['allCities']>[number]>;
 
 type CityListProps = Pick<
-  FlatListProps<City>,
+  FlatListProps<NonNullable<GetCitiesQuery['allCities']>[number]>,
   'style' | 'contentContainerStyle'
 >;
 
@@ -65,7 +65,7 @@ const CityList: FC<CityListProps> = ({ style, contentContainerStyle }) => {
       <List
         data={list}
         extraData={list}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item, index) => item?.id || String(index)}
         renderItem={(props) => <CityListItem {...props} />}
         style={style}
         contentContainerStyle={[

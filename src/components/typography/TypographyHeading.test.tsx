@@ -3,14 +3,13 @@ import React from 'react';
 import { TextStyle } from 'react-native';
 
 import TypographyHeading from './TypographyHeading';
-import { appColors } from '../design-system/colors';
-import { appThemeMode } from '../design-system/theme';
+import { appColors } from '../design-system/colorsTypes';
 import {
   defaultTypographyStyles,
   fontFamilyByWeight,
   headingStylesBySize,
-  typographyColorByMode,
-} from '../design-system/typography';
+  textDefaultColor,
+} from '../design-system/typographyTypes';
 
 describe('TypographyHeading', () => {
   it('renders with default props', () => {
@@ -23,7 +22,7 @@ describe('TypographyHeading', () => {
     expect(styles).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          color: appColors[typographyColorByMode[appThemeMode]],
+          color: appColors[textDefaultColor],
         }),
         expect.objectContaining({ fontSize: headingStylesBySize.h1.fontSize }),
         expect.objectContaining({ fontFamily: fontFamilyByWeight.rg }),
