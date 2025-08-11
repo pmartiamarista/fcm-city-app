@@ -1,13 +1,4 @@
-import { z } from 'zod';
-
-const hexColorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
-
-const appColorsSchema = z.record(
-  z.string(),
-  z.string().regex(hexColorRegex, { message: 'Invalid HEX color' }),
-);
-
-const colors = {
+export const appColors = {
   // Functional Light Green
   functionalLightGreen50: '#f0f5d2',
   functionalLightGreen100: '#e8f0bc',
@@ -92,8 +83,6 @@ const colors = {
   secondaryLightBlue800: '#456373',
   secondaryLightBlue900: '#2e424d',
 };
-
-export const appColors = appColorsSchema.parse(colors);
 
 export type AppColor = keyof typeof appColors;
 export type AppColorAttr = { color: AppColor };

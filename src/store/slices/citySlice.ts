@@ -26,11 +26,11 @@ const citySlice = createSlice({
   name: CITY,
   initialState,
   reducers: {
+    clearAllCities(state) {
+      state.allCities = initialState.allCities;
+    },
     clearSelectedCity(state) {
-      state.selectedCity = {
-        status: 'idle',
-        item: null,
-      };
+      state.selectedCity = initialState.selectedCity;
     },
   },
   extraReducers: (builder) => {
@@ -65,5 +65,5 @@ const citySlice = createSlice({
   },
 });
 
-export const { clearSelectedCity } = citySlice.actions;
+export const { actions: citySliceActions } = citySlice;
 export default citySlice.reducer;

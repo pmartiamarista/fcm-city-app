@@ -27,6 +27,7 @@ export default createConfig([
       'node_modules',
       '__mocks__',
       'src/graphql/__generated__',
+      'jest.config.cjs',
     ],
   },
   {
