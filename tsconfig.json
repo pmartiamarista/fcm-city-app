@@ -1,12 +1,18 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "noImplicitAny": true,
+    "skipLibCheck": true,
     "strict": true,
-    "baseUrl": ".",
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"]
     }
-  },
-  "incremental": true
+  }
 }

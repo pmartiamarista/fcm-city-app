@@ -21,7 +21,14 @@ export default createConfig([
   tsConfigs.recommended,
   expoConfig,
   {
-    ignores: ['.prettierrc.cjs', 'dist', 'node_modules', '__mocks__'],
+    ignores: [
+      '.prettierrc.cjs',
+      'dist',
+      'node_modules',
+      '__mocks__',
+      'src/graphql/__generated__',
+      'jest.config.cjs',
+    ],
   },
   {
     files: ['**/*.{js,ts,tsx}'],

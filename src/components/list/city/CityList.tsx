@@ -1,0 +1,109 @@
+import { FC, useEffect } from 'react';
+import { FlatList, FlatListProps, StyleSheet, View } from 'react-native';
+
+import { useAllCities } from '@/hooks/useAllCities';
+
+import { appSpacing } from '@/components/design-system/spacingTypes';
+import ErrorMessage from '@/components/ErrorMessage';
+
+import { City } from '@/graphql/__generated__/graphql';
+
+import CityListItem from './tile/CityListItem';
+import CityListItemSkeletons from './tile/CityListItemSkeletons';
+import ListEmptyMessage from '../ListEmptyMessage';
+import ListSeparator from '../ListSeparator';
+
+const List = FlatList<City>;
+
+type CityListProps = Pick<
+  FlatListProps<City>,
+  'style' | 'contentContainerStyle'
+>;
+
+const CityList: FC<CityListProps> = ({ style, contentContainerStyle }) => {
+  const {
+    state: { list, isLoading, hasError, isEmpty, isLoaded },
+    actions: { loadAllCities },
+  } = useAllCities();
+
+  useEffect(() => {
+    void loadAllCities();
+  }, [loadAllCities]);
+
+  if (hasError) {
+    return (
+      <View style={cityListStyles.container}>
+        <ErrorMessage retryAction={loadAllCities} />
+      </View>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <View
+        style={[
+          cityListStyles.container,
+          { justifyContent: 'flex-start' },
+          style,
+        ]}
+      >
+        <CityListItemSkeletons />
+      </View>
+    );
+  }
+
+  if (isEmpty) {
+    return (
+      <View style={cityListStyles.container}>
+        <ListEmptyMessage />
+      </View>
+    );
+  }
+
+  if (isLoaded) {
+    return (
+      <List
+        data={list}
+        extraData={list}
+        keyExtractor={(item) => item.id}
+        renderItem={(props) => <CityListItem {...props} />}
+        style={style}
+        contentContainerStyle={[
+          { paddingHorizontal: appSpacing.sm3 },
+          contentContainerStyle,
+        ]}
+        ItemSeparatorComponent={ListSeparator}
+        {...{
+          bounces: false,
+          bouncesZoom: false,
+          showsHorizontalScrollIndicator: false,
+          showsVerticalScrollIndicator: false,
+          alwaysBounceVertical: false,
+          alwaysBounceHorizontal: false,
+          onEndReachedThreshold: 0.333,
+          maxToRenderPerBatch: 10,
+          initialNumToRender: 10,
+          updateCellsBatchingPeriod: 50,
+          decelerationRate: 'fast',
+          overScrollMode: 'never',
+          scrollEventThrottle: 16,
+        }}
+      />
+    );
+  }
+};
+
+export default CityList;
+
+const cityListStyles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: appSpacing.xxs2,
+    height: '100%',
+    width: '100%',
+    alignContent: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: appSpacing.sm3,
+  },
+});

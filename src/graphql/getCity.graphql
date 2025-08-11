@@ -1,0 +1,10 @@
+query getCity($id: ID!) {
+  City(id: $id) {
+    id
+    key
+    name
+    nativeName
+    currency
+    language
+  }
+}
