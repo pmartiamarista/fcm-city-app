@@ -9,6 +9,7 @@ import { graphql } from '@/graphql/config/client';
 export const fetchCityById = async (id: string) => {
   try {
     const response = await graphql.getCity({ id });
+
     return response?.City ?? null;
   } catch {
     return null;

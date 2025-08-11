@@ -15,7 +15,7 @@ export const cityAsyncThunks = {
       return cities.filter((city): city is City => city !== null);
     },
     {
-      condition: (id, { getState }) => {
+      condition: (_, { getState }) => {
         const { city } = getState() as RootState;
         return city.allCities.status !== 'loading';
       },
@@ -24,14 +24,16 @@ export const cityAsyncThunks = {
 
   loadCityById: createAsyncThunk<City | null, string>(
     `${CITY}/loadCityById`,
-    async (id: string) => {
-      const city = await fetchCityById(id);
+    async (arg: City['id']) => {
+      const city = await fetchCityById(arg);
+
       return city;
     },
     {
-      condition: (id, { getState }) => {
+      condition: (arg, { getState }) => {
         const { city } = getState() as RootState;
-        return city.selectedCity.status !== 'loading';
+
+        return city.selectedCity?.[arg]?.status !== 'loading';
       },
     },
   ),

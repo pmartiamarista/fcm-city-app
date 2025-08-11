@@ -30,9 +30,7 @@ const CityListItem: ListRenderItem<City> = ({ item }) => {
               pressed ? cityListTileStyles.innerContainerPressed : {},
             ]}
           >
-            <CitiesListItemAvatar
-              style={[pressed ? cityListTileStyles.avatarPressed : {}]}
-            />
+            <CitiesListItemAvatar />
             <View
               style={{ flexShrink: 1, width: '100%', justifyContent: 'center' }}
             >

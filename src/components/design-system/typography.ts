@@ -21,7 +21,7 @@ export const typographyStyles = StyleSheet.create({
 
 export const typographyColorByMode: Record<AppThemeMode, AppColor> = {
   dark: 'neutral50',
-  light: 'mainDeepBlue500',
+  light: 'mainDeepBlue700',
 };
 
 export type FontWeight = 'rg' | 'md';
