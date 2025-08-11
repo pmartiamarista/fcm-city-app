@@ -4,7 +4,7 @@ import React from 'react';
 
 import { City } from '@/graphql/__generated__/graphql';
 
-import CityDetailScreen from './CityDetail.screen';
+import CityDetailScreen from './city/CityDetail.screen';
 import HomeScreen from './Home.screen';
 
 export type RootStackParamList = {

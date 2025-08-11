@@ -8,15 +8,17 @@ import useAppRouting from '@/hooks/navigation/useAppRouting';
 import { appSpacing } from '@/components/design-system/spacingTypes';
 import ErrorMessage from '@/components/ErrorMessage';
 import IconButton from '@/components/icon-button/IconButton';
+import LabelValueRow from '@/components/LabelValueRow';
 import IconButtonSkeleton from '@/components/skeleton/IconButtonSkeleton';
 import TypographyBodySkeleton from '@/components/skeleton/TypographyBodySkeleton';
 import TypographyHeadingSkeleton from '@/components/skeleton/TypographyHeadingSkeleton';
+import TypographyBody from '@/components/typography/TypographyBody';
 import TypographyHeading from '@/components/typography/TypographyHeading';
 
 import ImageHeader from '@/layout/ImageHeader';
 import RoundedContainer from '@/layout/RoundedContainer';
 
-const image = require('../../assets/bg/city-bg.png');
+const image = require('../../../assets/bg/city-bg.png');
 
 export default function CityDetailScreen() {
   const { goBack } = useAppNavigation();
@@ -43,9 +45,19 @@ export default function CityDetailScreen() {
               {isLoaded && <IconButton icon='arrowLeft' onPress={goBack} />}
               {isLoading && <IconButtonSkeleton />}
               {isLoaded && (
-                <TypographyHeading textColor='neutral50'>
-                  {item?.name}
-                </TypographyHeading>
+                <View
+                  style={{
+                    gap: appSpacing.xxs3,
+                    justifyContent: 'center',
+                  }}
+                >
+                  <TypographyHeading textColor='neutral50' size='h2'>
+                    {item?.name}
+                  </TypographyHeading>
+                  <TypographyBody textColor='neutral300' size='lg'>
+                    {item?.nativeName}
+                  </TypographyBody>
+                </View>
               )}
               {isLoading && (
                 <TypographyHeadingSkeleton style={styles.headingSkeleton} />
@@ -69,7 +81,16 @@ export default function CityDetailScreen() {
               })}
             </View>
           )}
-          {isLoaded && <View></View>}
+          {isLoaded && (
+            <View style={{ gap: appSpacing.xxs3 }}>
+              {Boolean(item?.currency) && (
+                <LabelValueRow label='Currency' value={item?.currency} />
+              )}
+              {Boolean(item?.language) && (
+                <LabelValueRow label='Language' value={item?.language} />
+              )}
+            </View>
+          )}
         </View>
       </RoundedContainer>
     </View>
