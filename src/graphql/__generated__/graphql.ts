@@ -1,3 +1,4 @@
+import { PlaceMetadata } from '@/types/placeMetadata';
 import { GraphQLClient, RequestOptions } from 'graphql-request';
 import gql from 'graphql-tag';
 export type Maybe<T> = T | null;
@@ -28,7 +29,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
   Float: { input: number; output: number };
-  JSON: { input: any; output: any };
+  JSON: { input: PlaceMetadata; output: PlaceMetadata };
 };
 
 export type City = {
@@ -247,12 +248,16 @@ export type GetCityQuery = {
 };
 
 export type GetCityPlaceQueryVariables = Exact<{
-  id: Scalars['ID']['input'];
+  key: Scalars['String']['input'];
 }>;
 
 export type GetCityPlaceQuery = {
   __typename?: 'Query';
-  Place?: { __typename?: 'Place'; key: string; place: any } | null;
+  allPlaces?: Array<{
+    __typename?: 'Place';
+    key: string;
+    place: PlaceMetadata;
+  } | null> | null;
 };
 
 export const GetCitiesDocument = gql`
@@ -278,8 +283,8 @@ export const GetCityDocument = gql`
   }
 `;
 export const GetCityPlaceDocument = gql`
-  query getCityPlace($id: ID!) {
-    Place(id: $id) {
+  query getCityPlace($key: String!) {
+    allPlaces(filter: { key: $key }) {
       key
       place
     }

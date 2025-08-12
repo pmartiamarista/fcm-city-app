@@ -1,6 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { City, GetCitiesQuery, Place } from '@/graphql/__generated__/graphql';
+import {
+  City,
+  GetCitiesQuery,
+  GetCityPlaceQuery,
+} from '@/graphql/__generated__/graphql';
 
 import { CITY, cityAsyncThunks } from './cityActions';
 
@@ -12,7 +16,9 @@ interface CityState {
     City['id'],
     {
       city: RequestStatus & { item: City | null };
-      place: RequestStatus & { item: Place | null };
+      place: RequestStatus & {
+        list: NonNullable<GetCityPlaceQuery['allPlaces']>;
+      };
     }
   >;
 }
@@ -34,6 +40,8 @@ const citySlice = createSlice({
     },
     clearSelectedCity(state, { payload }: PayloadAction<City['id']>) {
       state.selectedCity[payload].city.status = 'idle';
+    },
+    clearSelectedCityPlace(state, { payload }: PayloadAction<City['id']>) {
       state.selectedCity[payload].place.status = 'idle';
     },
   },
@@ -61,11 +69,10 @@ const citySlice = createSlice({
           if (!currentSelectedCity) {
             state.selectedCity[arg.id] = {
               city: { status: 'loading', item: null },
-              place: { status: 'idle', item: null },
+              place: { status: 'idle', list: [] },
             };
           } else {
             currentSelectedCity.city.status = 'loading';
-            currentSelectedCity.place.status = 'loading';
           }
         },
       )
@@ -80,6 +87,32 @@ const citySlice = createSlice({
         (state, { meta: { arg }, payload }) => {
           state.selectedCity[arg.id].city.status = 'succeeded';
           state.selectedCity[arg.id].city.item = payload;
+        },
+      )
+
+      // Single City Place
+      .addCase(
+        cityAsyncThunks.loadCityPlace.pending,
+        (state, { meta: { arg } }) => {
+          const currentSelectedCity = state.selectedCity[arg.id];
+          if (!currentSelectedCity) {
+            state.selectedCity[arg.id].place = { status: 'idle', list: [] };
+          } else {
+            currentSelectedCity.place.status = 'loading';
+          }
+        },
+      )
+      .addCase(
+        cityAsyncThunks.loadCityPlace.rejected,
+        (state, { meta: { arg } }) => {
+          state.selectedCity[arg.id].place.status = 'failed';
+        },
+      )
+      .addCase(
+        cityAsyncThunks.loadCityPlace.fulfilled,
+        (state, { meta: { arg }, payload }) => {
+          state.selectedCity[arg.id].place.status = 'succeeded';
+          state.selectedCity[arg.id].place.list = payload?.allPlaces || [];
         },
       );
   },

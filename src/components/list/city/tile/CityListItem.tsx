@@ -13,9 +13,9 @@ import CitiesListItemHeader from './CityListItemHeader';
 import CitiesListItemSubheader from './CityListItemSubheader';
 import { cityListTileStyles } from '../cityListTypes';
 
-const CityListItem: ListRenderItem<
-  NonNullable<GetCitiesQuery['allCities']>[number]
-> = ({ item }) => {
+export type CityListItemType = NonNullable<GetCitiesQuery['allCities']>[number];
+
+const CityListItem: ListRenderItem<CityListItemType> = ({ item }) => {
   const navigation = useAppNavigation();
 
   const onPressTile = useCallback(() => {

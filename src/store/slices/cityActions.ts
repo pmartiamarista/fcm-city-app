@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { fetchAllCities, getCity } from '@/api/cityService';
+import { fetchAllCities, getCity, getCityPlace } from '@/api/cityService';
 import { City } from '@/graphql/__generated__/graphql';
 
 import { RootState } from '..';
@@ -38,6 +38,26 @@ export const cityAsyncThunks = {
         }
 
         return selectedCity?.status !== 'loading';
+      },
+    },
+  ),
+
+  loadCityPlace: createAsyncThunk(
+    `${CITY}/loadCityPlace`,
+    async (arg: Pick<City, 'id' | 'key'>) => {
+      return await getCityPlace(arg);
+    },
+    {
+      condition: (arg, { getState }) => {
+        const { city } = getState() as RootState;
+
+        const selectedCityPlace = city.selectedCity?.[arg.id]?.place;
+
+        if (!selectedCityPlace) {
+          return true;
+        }
+
+        return selectedCityPlace?.status !== 'loading';
       },
     },
   ),

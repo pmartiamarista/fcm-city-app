@@ -9,6 +9,7 @@ import { appSpacing } from '@/components/design-system/spacingTypes';
 import ErrorMessage from '@/components/ErrorMessage';
 import IconButton from '@/components/icon-button/IconButton';
 import LabelValueRow from '@/components/LabelValueRow';
+import PlaceList from '@/components/list/place/PlaceList';
 import IconButtonSkeleton from '@/components/skeleton/IconButtonSkeleton';
 import TypographyBodySkeleton from '@/components/skeleton/TypographyBodySkeleton';
 import TypographyHeadingSkeleton from '@/components/skeleton/TypographyHeadingSkeleton';
@@ -42,26 +43,37 @@ export default function CityDetailScreen() {
         <ImageHeader source={image} isLoaded={isLoaded}>
           {!hasError && (
             <View style={styles.imageContent}>
-              {isLoaded && <IconButton icon='arrowLeft' onPress={goBack} />}
               {isLoading && <IconButtonSkeleton />}
-              {isLoaded && (
-                <View
-                  style={{
-                    gap: appSpacing.xxs3,
-                    justifyContent: 'center',
-                  }}
-                >
-                  <TypographyHeading textColor='neutral50' size='h2'>
-                    {item?.name}
-                  </TypographyHeading>
-                  <TypographyBody textColor='neutral300' size='lg'>
-                    {item?.nativeName}
-                  </TypographyBody>
-                </View>
-              )}
-              {isLoading && (
-                <TypographyHeadingSkeleton style={styles.headingSkeleton} />
-              )}
+              {isLoaded && <IconButton icon='arrowLeft' onPress={goBack} />}
+              <View
+                style={{
+                  gap: appSpacing.xxs3,
+                  justifyContent: 'center',
+                }}
+              >
+                {isLoading && (
+                  <>
+                    <TypographyHeadingSkeleton
+                      style={styles.headingSkeleton}
+                      size='h2'
+                    />
+                    <TypographyBodySkeleton
+                      style={styles.headingSkeleton}
+                      size='lg'
+                    />
+                  </>
+                )}
+                {isLoaded && (
+                  <>
+                    <TypographyHeading textColor='neutral50' size='h2'>
+                      {item?.name}
+                    </TypographyHeading>
+                    <TypographyBody textColor='neutral300' size='lg'>
+                      {item?.nativeName}
+                    </TypographyBody>
+                  </>
+                )}
+              </View>
             </View>
           )}
         </ImageHeader>
@@ -91,6 +103,7 @@ export default function CityDetailScreen() {
               )}
             </View>
           )}
+          {!!item && <PlaceList entity={item} />}
         </View>
       </RoundedContainer>
     </View>

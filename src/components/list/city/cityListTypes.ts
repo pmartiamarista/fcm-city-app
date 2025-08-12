@@ -7,8 +7,8 @@ import { appSpacing } from '@/components/design-system/spacingTypes';
 
 export const cityListTileStyles = StyleSheet.create({
   container: {
-    borderRadius: appRadius.rounded,
     height: 100,
+    borderRadius: appRadius.rounded,
     width: '100%',
     padding: appSpacing.xxs2,
   },

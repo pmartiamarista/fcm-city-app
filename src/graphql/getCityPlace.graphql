@@ -1,5 +1,5 @@
-query getCityPlace($id: ID!) {
-  Place(id: $id) {
+query getCityPlace($key: String!) {
+  allPlaces(filter: { key: $key }) {
     key
     place
   }

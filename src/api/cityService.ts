@@ -1,4 +1,9 @@
-import { City, GetCitiesQuery, Place } from '@/graphql/__generated__/graphql';
+import {
+  City,
+  GetCitiesQuery,
+  GetCityPlaceQuery,
+  Place,
+} from '@/graphql/__generated__/graphql';
 import { graphql } from '@/graphql/config/client';
 
 /**
@@ -22,20 +27,20 @@ export const getCity = async (
 };
 
 /**
- * Retrieves a place associated with a city using its unique key.
+ * Retrieves places associated with a city using a unique key.
  *
- * Executes a GraphQL query with the specified `key` and returns the corresponding
- * place object if available. Returns `null` if the place is not found or the request fails.
+ * Executes a GraphQL query with the specified `key` as a filter and returns the matching
+ * places if available. Returns `null` if no places are found or the request fails.
  *
  * @param params - An object containing the place's `key`.
- * @returns A `Place` object if found, otherwise `null`.
+ * @returns A `GetCityPlaceQuery` object containing matching places, or `null` on failure.
  */
 export const getCityPlace = async (
   params: Pick<Place, 'key'>,
-): Promise<Place | null> => {
+): Promise<GetCityPlaceQuery | null> => {
   try {
-    const response = await graphql.getCityPlace({ id: params.key });
-    return response.Place ?? null;
+    const response = await graphql.getCityPlace({ key: params.key });
+    return response?.allPlaces ? response : null;
   } catch {
     return null;
   }

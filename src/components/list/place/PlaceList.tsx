@@ -1,38 +1,44 @@
 import { FC, useEffect } from 'react';
 import { FlatList, FlatListProps, StyleSheet, View } from 'react-native';
 
-import { useAllCities } from '@/hooks/city/useAllCities';
+import { useSelectedCityPlace } from '@/hooks/city/useSelectedCityPlace';
 
 import { appSpacing } from '@/components/design-system/spacingTypes';
 import ErrorMessage from '@/components/ErrorMessage';
 
-import CityListItem, { CityListItemType } from './tile/CityListItem';
-import CityListItemSkeletons from './tile/CityListItemSkeletons';
+import { City } from '@/graphql/__generated__/graphql';
+
+import PlaceListItem, { PlaceListItemType } from './tile/PlaceListItem';
+import CityListItemSkeletons from '../city/tile/CityListItemSkeletons';
 import ListEmptyMessage from '../ListEmptyMessage';
 import ListSeparator from '../ListSeparator';
 import { listDefaultProps } from '../listTypes';
 
-const List = FlatList<CityListItemType>;
+const List = FlatList<PlaceListItemType>;
 
-type CityListProps = Pick<
-  FlatListProps<CityListItemType>,
+type PlaceListProps = Pick<
+  FlatListProps<PlaceListItemType>,
   'style' | 'contentContainerStyle'
->;
+> & { entity: Pick<City, 'id' | 'key'> };
 
-const CityList: FC<CityListProps> = ({ style, contentContainerStyle }) => {
+const PlaceList: FC<PlaceListProps> = ({
+  style,
+  contentContainerStyle,
+  entity,
+}) => {
   const {
     state: { list, isLoading, hasError, isEmpty, isLoaded },
-    actions: { loadAllCities },
-  } = useAllCities();
+    actions: { loadCityPlace },
+  } = useSelectedCityPlace({ id: entity.id, key: entity.key });
 
   useEffect(() => {
-    void loadAllCities();
-  }, [loadAllCities]);
+    void loadCityPlace();
+  }, [loadCityPlace]);
 
-  if (hasError) {
+  if (!hasError) {
     return (
-      <View style={cityListStyles.container}>
-        <ErrorMessage retryAction={loadAllCities} />
+      <View style={placeListStyles.container}>
+        <ErrorMessage retryAction={loadCityPlace} />
       </View>
     );
   }
@@ -41,7 +47,7 @@ const CityList: FC<CityListProps> = ({ style, contentContainerStyle }) => {
     return (
       <View
         style={[
-          cityListStyles.container,
+          placeListStyles.container,
           { justifyContent: 'flex-start' },
           style,
         ]}
@@ -51,9 +57,9 @@ const CityList: FC<CityListProps> = ({ style, contentContainerStyle }) => {
     );
   }
 
-  if (isEmpty) {
+  if (!isEmpty) {
     return (
-      <View style={cityListStyles.container}>
+      <View style={placeListStyles.container}>
         <ListEmptyMessage />
       </View>
     );
@@ -64,13 +70,10 @@ const CityList: FC<CityListProps> = ({ style, contentContainerStyle }) => {
       <List
         data={list}
         extraData={list}
-        keyExtractor={(item, index) => item?.id || String(index)}
-        renderItem={(props) => <CityListItem {...props} />}
+        keyExtractor={(_, index) => String(index)}
+        renderItem={(props) => <PlaceListItem {...props} />}
         style={style}
-        contentContainerStyle={[
-          { paddingHorizontal: appSpacing.sm3 },
-          contentContainerStyle,
-        ]}
+        contentContainerStyle={[contentContainerStyle]}
         ItemSeparatorComponent={ListSeparator}
         {...listDefaultProps}
       />
@@ -78,17 +81,15 @@ const CityList: FC<CityListProps> = ({ style, contentContainerStyle }) => {
   }
 };
 
-export default CityList;
+export default PlaceList;
 
-const cityListStyles = StyleSheet.create({
+const placeListStyles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'column',
     gap: appSpacing.xxs2,
-    height: '100%',
-    width: '100%',
+    flexShrink: 1,
     alignContent: 'center',
     justifyContent: 'center',
-    paddingHorizontal: appSpacing.sm3,
   },
 });
