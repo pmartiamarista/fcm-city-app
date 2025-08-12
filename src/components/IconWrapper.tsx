@@ -4,12 +4,13 @@ import { SvgProps } from 'react-native-svg';
 import { AppColorAttr, appColors } from './design-system/colorsTypes';
 import { AppIconAttr, appIcons } from './design-system/iconTypes';
 
+import { SizeGeneric } from '@/types/generics';
+
 export interface IconWrapperProps
   extends Omit<SvgProps, 'ref' | 'color'>,
     Partial<AppColorAttr>,
-    Partial<AppIconAttr> {
-  size?: number;
-}
+    Partial<AppIconAttr>,
+    Partial<SizeGeneric<number>> {}
 
 export type IconPropsAttr = { iconProps?: Omit<IconWrapperProps, 'ref'> };
 

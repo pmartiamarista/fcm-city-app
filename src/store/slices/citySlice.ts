@@ -8,17 +8,15 @@ import {
 
 import { CITY, cityAsyncThunks } from './cityActions';
 
-import { RequestStatus } from '@/types/types';
+import { ItemBaseProps, ListBaseProps } from '@/types/types';
 
 interface CityState {
-  allCities: RequestStatus & { list: NonNullable<GetCitiesQuery['allCities']> };
+  allCities: ListBaseProps<NonNullable<GetCitiesQuery['allCities']>>;
   selectedCity: Record<
     City['id'],
     {
-      city: RequestStatus & { item: City | null };
-      place: RequestStatus & {
-        list: NonNullable<GetCityPlaceQuery['allPlaces']>;
-      };
+      city: ItemBaseProps<City | null>;
+      place: ListBaseProps<NonNullable<GetCityPlaceQuery['allPlaces']>>;
     }
   >;
 }

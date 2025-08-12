@@ -14,28 +14,31 @@ import ListEmptyMessage from '../ListEmptyMessage';
 import ListSeparator from '../ListSeparator';
 import { listDefaultProps } from '../listTypes';
 
+import { ItemGeneric } from '@/types/generics';
+
 const List = FlatList<PlaceListItemType>;
 
 type PlaceListProps = Pick<
   FlatListProps<PlaceListItemType>,
   'style' | 'contentContainerStyle'
-> & { entity: Pick<City, 'id' | 'key'> };
+> &
+  ItemGeneric<Pick<City, 'id' | 'key'>>;
 
 const PlaceList: FC<PlaceListProps> = ({
   style,
   contentContainerStyle,
-  entity,
+  item,
 }) => {
   const {
     state: { list, isLoading, hasError, isEmpty, isLoaded },
     actions: { loadCityPlace },
-  } = useSelectedCityPlace({ id: entity.id, key: entity.key });
+  } = useSelectedCityPlace({ id: item.id, key: item.key });
 
   useEffect(() => {
     void loadCityPlace();
   }, [loadCityPlace]);
 
-  if (!hasError) {
+  if (hasError) {
     return (
       <View style={placeListStyles.container}>
         <ErrorMessage retryAction={loadCityPlace} />
@@ -57,7 +60,7 @@ const PlaceList: FC<PlaceListProps> = ({
     );
   }
 
-  if (!isEmpty) {
+  if (isEmpty) {
     return (
       <View style={placeListStyles.container}>
         <ListEmptyMessage />
@@ -68,6 +71,7 @@ const PlaceList: FC<PlaceListProps> = ({
   if (isLoaded) {
     return (
       <List
+        horizontal
         data={list}
         extraData={list}
         keyExtractor={(_, index) => String(index)}

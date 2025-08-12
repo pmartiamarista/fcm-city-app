@@ -2,6 +2,8 @@ import { StyleSheet, TextProps, TextStyle } from 'react-native';
 
 import { AppColor, appColors } from './colorsTypes';
 
+import { SizeGeneric } from '@/types/generics';
+
 export const typographyDefaultProps: TextProps = {
   allowFontScaling: true,
   maxFontSizeMultiplier: 1.5,
@@ -27,8 +29,7 @@ export const fontFamilyByWeight: Record<FontWeight, string> = {
   md: 'SyneMedium',
 };
 
-export interface DefaultFontType<T> {
-  size?: T;
+export interface DefaultFontType<T> extends Partial<SizeGeneric<T>> {
   weight?: FontWeight;
   textColor?: AppColor;
   noLineHeight?: boolean;

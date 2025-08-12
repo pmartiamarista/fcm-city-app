@@ -2,15 +2,15 @@ import { memo } from 'react';
 
 import TypographyBody from './typography/TypographyBody';
 
-type LabelValueRowProps = {
-  label: string;
-  value?: string | number | null;
-};
+import { LabelGeneric, ValueGeneric } from '@/types/generics';
+
+type LabelValueRowProps = Partial<ValueGeneric<string | number>> &
+  LabelGeneric<string>;
 
 const LabelValueRow = ({ label, value }: LabelValueRowProps) => {
   return (
     <TypographyBody weight='md' size='md'>
-      <TypographyBody size='lg' weight='md'>
+      <TypographyBody size='md' weight='md'>
         {label}
         {': '}
       </TypographyBody>

@@ -9,7 +9,6 @@ import { appSpacing } from '@/components/design-system/spacingTypes';
 import ErrorMessage from '@/components/ErrorMessage';
 import IconButton from '@/components/icon-button/IconButton';
 import LabelValueRow from '@/components/LabelValueRow';
-import PlaceList from '@/components/list/place/PlaceList';
 import IconButtonSkeleton from '@/components/skeleton/IconButtonSkeleton';
 import TypographyBodySkeleton from '@/components/skeleton/TypographyBodySkeleton';
 import TypographyHeadingSkeleton from '@/components/skeleton/TypographyHeadingSkeleton';
@@ -18,6 +17,8 @@ import TypographyHeading from '@/components/typography/TypographyHeading';
 
 import ImageHeader from '@/layout/ImageHeader';
 import RoundedContainer from '@/layout/RoundedContainer';
+
+import CityPlaceSection from './sections/CityPlaceSection';
 
 const image = require('../../../assets/bg/city-bg.png');
 
@@ -103,7 +104,7 @@ export default function CityDetailScreen() {
               )}
             </View>
           )}
-          {!!item && <PlaceList entity={item} />}
+          {!!item && <CityPlaceSection />}
         </View>
       </RoundedContainer>
     </View>
