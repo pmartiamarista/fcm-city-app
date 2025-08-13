@@ -1,17 +1,20 @@
-# .github/workflows/deploy.yml
 name: Lint, Test, and Publish
 
 on:
-  push:
-    branches: [ main, dev ]
   pull_request:
-    branches: [ main, dev ]
+    branches: [main, dev]
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  # This job runs the quality checks
   lint_and_test:
     name: Lint and Test
     runs-on: ubuntu-latest
+
     steps:
       - name: ⬇️ Check out repository
         uses: actions/checkout@v4
@@ -31,16 +34,12 @@ jobs:
       - name: 🧪 Run tests
         run: yarn test
 
-  # This job publishes the app, but only after lint_and_test succeeds
   publish:
     name: Publish
-    # This makes this job dependent on the previous one
     needs: lint_and_test
-    
-    # This condition ensures the job ONLY runs on a push to the main branch
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    
     runs-on: ubuntu-latest
+
     steps:
       - name: ⬇️ Check out repository
         uses: actions/checkout@v4
