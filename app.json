@@ -14,7 +14,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.peter1989m.fcmcityapp"
+      "bundleIdentifier": "com.peter1989m.fcmcityapp",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -23,9 +26,6 @@
       },
       "edgeToEdgeEnabled": true,
       "package": "com.peter1989m.fcmcityapp"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
@@ -39,6 +39,42 @@
     },
     "updates": {
       "url": "https://u.expo.dev/6c32dcf9-0c08-4f08-8f97-a836327d6b08"
-    }
+    },
+    "plugins": [
+      [
+        "expo-font",
+        {
+          "fonts": [],
+          "android": {
+            "fonts": [
+              {
+                "fontFamily": "SyneRegular",
+                "fontDefinitions": [
+                  {
+                    "path": "./assets/fonts/Syne-Regular.ttf",
+                    "weight": 400
+                  }
+                ]
+              },
+              {
+                "fontFamily": "SyneMedium",
+                "fontDefinitions": [
+                  {
+                    "path": "./assets/fonts/Syne-Medium.ttf",
+                    "weight": 500
+                  }
+                ]
+              }
+            ]
+          },
+          "ios": {
+            "fonts": [
+              "./assets/fonts/Syne-Regular.ttf",
+              "./assets/fonts/Syne-Medium.ttf"
+            ]
+          }
+        }
+      ]
+    ]
   }
 }

@@ -1,11 +1,12 @@
 import { animated, useSpring } from '@react-spring/native';
 import React, { ComponentProps } from 'react';
 
-import { appColors } from '../design-system/colors';
+import { appColors } from '../design-system/colorTypes';
+import { appRadius } from '../design-system/radiusTypes';
 
 const AnimatedView = animated.View;
 
-interface SkeletonProps extends ComponentProps<typeof AnimatedView> {
+export interface SkeletonProps extends ComponentProps<typeof AnimatedView> {
   fadeDuration?: number;
 }
 
@@ -29,7 +30,15 @@ const Skeleton: React.FC<SkeletonProps> = ({
   }));
 
   return (
-    <AnimatedView style={[style, { overflow: 'hidden' }, styles]}>
+    <AnimatedView
+      testID='skeleton'
+      style={[
+        { borderRadius: appRadius.rounded },
+        style,
+        { overflow: 'hidden' },
+        styles,
+      ]}
+    >
       {children}
     </AnimatedView>
   );

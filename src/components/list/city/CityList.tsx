@@ -1,22 +1,21 @@
 import { FC, useEffect } from 'react';
 import { FlatList, FlatListProps, StyleSheet, View } from 'react-native';
 
-import { useAllCities } from '@/hooks/useAllCities';
+import { useAllCities } from '@/hooks/city/useAllCities';
 
 import { appSpacing } from '@/components/design-system/spacingTypes';
 import ErrorMessage from '@/components/ErrorMessage';
 
-import { City } from '@/graphql/__generated__/graphql';
-
-import CityListItem from './tile/CityListItem';
+import CityListItem, { CityListItemType } from './tile/CityListItem';
 import CityListItemSkeletons from './tile/CityListItemSkeletons';
 import ListEmptyMessage from '../ListEmptyMessage';
 import ListSeparator from '../ListSeparator';
+import { listDefaultProps } from '../listTypes';
 
-const List = FlatList<City>;
+const List = FlatList<CityListItemType>;
 
 type CityListProps = Pick<
-  FlatListProps<City>,
+  FlatListProps<CityListItemType>,
   'style' | 'contentContainerStyle'
 >;
 
@@ -65,7 +64,7 @@ const CityList: FC<CityListProps> = ({ style, contentContainerStyle }) => {
       <List
         data={list}
         extraData={list}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item, index) => item?.id || String(index)}
         renderItem={(props) => <CityListItem {...props} />}
         style={style}
         contentContainerStyle={[
@@ -73,21 +72,7 @@ const CityList: FC<CityListProps> = ({ style, contentContainerStyle }) => {
           contentContainerStyle,
         ]}
         ItemSeparatorComponent={ListSeparator}
-        {...{
-          bounces: false,
-          bouncesZoom: false,
-          showsHorizontalScrollIndicator: false,
-          showsVerticalScrollIndicator: false,
-          alwaysBounceVertical: false,
-          alwaysBounceHorizontal: false,
-          onEndReachedThreshold: 0.333,
-          maxToRenderPerBatch: 10,
-          initialNumToRender: 10,
-          updateCellsBatchingPeriod: 50,
-          decelerationRate: 'fast',
-          overScrollMode: 'never',
-          scrollEventThrottle: 16,
-        }}
+        {...listDefaultProps}
       />
     );
   }

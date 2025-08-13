@@ -1,10 +1,10 @@
+import { animated, useSpring } from '@react-spring/native';
 import { FC } from 'react';
-import { StyleSheet, View, ViewProps } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 
-import { appColors } from '@/components/design-system/colors';
+import { appColors } from '@/components/design-system/colorTypes';
 import { appRadius } from '@/components/design-system/radiusTypes';
 import { appShadows } from '@/components/design-system/shadowTypes';
-import IconCity from '@/components/icons/IconCity';
 
 import { cityListTileStyles } from '../cityListTypes';
 
@@ -12,13 +12,20 @@ const avatarSize =
   cityListTileStyles.container.height -
   (cityListTileStyles.container.padding || 0) * 2;
 
-type CityListItemAvatarProps = ViewProps;
+const AnimatedImage = animated(Image);
 
-const CityListItemAvatar: FC<CityListItemAvatarProps> = (props) => {
+const CityListItemAvatar: FC = () => {
+  const springProps = useSpring({
+    from: { opacity: 0, scale: 0.8 },
+    to: { opacity: 1, scale: 1 },
+    config: { tension: 200, friction: 15, duration: 1000 },
+  });
+
   return (
-    <View style={[cityListItemStyles.container, props.style]}>
-      <IconCity fill={appColors.mainDeepBlue700} width={50} height={50} />
-    </View>
+    <AnimatedImage
+      style={[cityListItemStyles.container, springProps]}
+      source={require('../../../../../assets/bg/city-tile-bg.png')}
+    />
   );
 };
 

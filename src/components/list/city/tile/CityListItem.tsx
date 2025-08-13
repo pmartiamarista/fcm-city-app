@@ -1,23 +1,28 @@
 import { memo, useCallback } from 'react';
 import { ListRenderItem, Pressable, View } from 'react-native';
 
-import useAppNavigation from '@/hooks/useAppNavigation';
+import { useAppNavigation } from '@/hooks/navigation/useAppNavigation';
 
-import IconArrowRight from '@/components/icons/IconArrowRight';
+import { appSpacing } from '@/components/design-system/spacingTypes';
+import IconWrapper from '@/components/IconWrapper';
 
-import { City } from '@/graphql/__generated__/graphql';
+import { GetCitiesQuery } from '@/graphql/__generated__/graphql';
 
 import CitiesListItemAvatar from './CityListItemAvatar';
 import CitiesListItemHeader from './CityListItemHeader';
 import CitiesListItemSubheader from './CityListItemSubheader';
 import { cityListTileStyles } from '../cityListTypes';
 
-const CityListItem: ListRenderItem<City> = ({ item }) => {
+export type CityListItemType = NonNullable<GetCitiesQuery['allCities']>[number];
+
+const CityListItem: ListRenderItem<CityListItemType> = ({ item }) => {
   const navigation = useAppNavigation();
 
   const onPressTile = useCallback(() => {
-    navigation.navigate('CityDetail', { id: item?.id });
-  }, [item?.id, navigation]);
+    if (item) {
+      navigation.navigate('CityDetail', { id: item?.id });
+    }
+  }, [item, navigation]);
 
   return (
     <Pressable onPress={onPressTile}>
@@ -30,16 +35,19 @@ const CityListItem: ListRenderItem<City> = ({ item }) => {
               pressed ? cityListTileStyles.innerContainerPressed : {},
             ]}
           >
-            <CitiesListItemAvatar
-              style={[pressed ? cityListTileStyles.avatarPressed : {}]}
-            />
+            <CitiesListItemAvatar />
             <View
-              style={{ flexShrink: 1, width: '100%', justifyContent: 'center' }}
+              style={{
+                flexShrink: 1,
+                width: '100%',
+                justifyContent: 'center',
+                paddingHorizontal: appSpacing.xxs2,
+              }}
             >
-              <CitiesListItemHeader>{item.name}</CitiesListItemHeader>
+              <CitiesListItemHeader>{item?.name}</CitiesListItemHeader>
               <View style={{ flexShrink: 1 }}>
                 <CitiesListItemSubheader>
-                  {item.nativeName}
+                  {item?.nativeName}
                 </CitiesListItemSubheader>
               </View>
             </View>
@@ -49,7 +57,7 @@ const CityListItem: ListRenderItem<City> = ({ item }) => {
                 justifyContent: 'center',
               }}
             >
-              <IconArrowRight />
+              <IconWrapper icon='arrowRight' color='mainDeepBlue700' />
             </View>
           </View>
         );

@@ -1,3 +1,4 @@
+import { PlaceMetadata } from '@/types/placeMetadata';
 import { GraphQLClient, RequestOptions } from 'graphql-request';
 import gql from 'graphql-tag';
 export type Maybe<T> = T | null;
@@ -28,7 +29,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
   Float: { input: number; output: number };
-  JSON: { input: any; output: any };
+  JSON: { input: PlaceMetadata; output: PlaceMetadata };
 };
 
 export type City = {
@@ -246,6 +247,19 @@ export type GetCityQuery = {
   } | null;
 };
 
+export type GetCityPlaceQueryVariables = Exact<{
+  key: Scalars['String']['input'];
+}>;
+
+export type GetCityPlaceQuery = {
+  __typename?: 'Query';
+  allPlaces?: Array<{
+    __typename?: 'Place';
+    key: string;
+    place: PlaceMetadata;
+  } | null> | null;
+};
+
 export const GetCitiesDocument = gql`
   query GetCities {
     allCities {
@@ -265,6 +279,14 @@ export const GetCityDocument = gql`
       nativeName
       currency
       language
+    }
+  }
+`;
+export const GetCityPlaceDocument = gql`
+  query getCityPlace($key: String!) {
+    allPlaces(filter: { key: $key }) {
+      key
+      place
     }
   }
 `;
@@ -320,6 +342,24 @@ export function getSdk(
             signal,
           }),
         'getCity',
+        'query',
+        variables,
+      );
+    },
+    getCityPlace(
+      variables: GetCityPlaceQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+      signal?: RequestInit['signal'],
+    ): Promise<GetCityPlaceQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<GetCityPlaceQuery>({
+            document: GetCityPlaceDocument,
+            variables,
+            requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders },
+            signal,
+          }),
+        'getCityPlace',
         'query',
         variables,
       );

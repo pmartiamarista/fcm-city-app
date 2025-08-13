@@ -19,7 +19,10 @@ const config: CodegenConfig = {
         'typescript-operations',
         'typescript-graphql-request',
       ],
-      presetConfig: {
+      config: {
+        scalars: {
+          JSON: '@/types/placeMetadata#PlaceMetadata',
+        },
         gqlTagName: 'gql',
       },
     },

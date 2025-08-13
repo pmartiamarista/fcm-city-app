@@ -1,7 +1,7 @@
 import React, { FC, memo } from 'react';
 import { Text, View, ViewProps } from 'react-native';
 
-import { appColors } from './design-system/colors';
+import { appColors } from './design-system/colorTypes';
 import TypographyBody from './typography/TypographyBody';
 
 export interface ErrorMessageProps extends Pick<ViewProps, 'style'> {
@@ -12,7 +12,7 @@ const ErrorMessage: FC<ErrorMessageProps> = ({ retryAction, style }) => {
   return (
     <View style={[{ alignItems: 'center' }, style]}>
       <TypographyBody weight='md' size='md'>
-        Algo malo ha pasado
+        Something bad has happened
         {retryAction ? ', ' : ''}
         {Boolean(retryAction) && (
           <Text
@@ -24,7 +24,7 @@ const ErrorMessage: FC<ErrorMessageProps> = ({ retryAction, style }) => {
             ]}
             onPress={retryAction}
           >
-            Reintentar
+            Try again
           </Text>
         )}
       </TypographyBody>

@@ -1,11 +1,13 @@
-import { NavigationContainer } from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
+import { appColors } from '@/components/design-system/colorTypes';
+
 import { City } from '@/graphql/__generated__/graphql';
 
-import CityDetailScreen from './CityDetail.screen';
-import HomeScreen from './Home.screen';
+import CityDetailScreen from './city/CityDetail.screen';
+import HomeScreen from './home/Home.screen';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -16,7 +18,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const RootStack = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={MyTheme}>
       <Stack.Navigator
         initialRouteName='Home'
         screenOptions={{
@@ -28,4 +30,12 @@ export const RootStack = () => {
       </Stack.Navigator>
     </NavigationContainer>
   );
+};
+
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: appColors.neutral50,
+  },
 };

@@ -1,4 +1,4 @@
-import { appColors } from './colors';
+import { appColors } from './colorTypes';
 
 export const appShadows = {
   shadow100: {

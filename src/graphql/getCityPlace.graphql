@@ -1,0 +1,6 @@
+query getCityPlace($key: String!) {
+  allPlaces(filter: { key: $key }) {
+    key
+    place
+  }
+}

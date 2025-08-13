@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { fetchAllCities, fetchCityById } from '@/api/cityService';
+import { fetchAllCities, getCity, getCityPlace } from '@/api/cityService';
 import { City } from '@/graphql/__generated__/graphql';
 
 import { RootState } from '..';
@@ -8,30 +8,56 @@ import { RootState } from '..';
 export const CITY = 'city';
 
 export const cityAsyncThunks = {
-  loadAllCities: createAsyncThunk<City[]>(
+  loadAllCities: createAsyncThunk(
     `${CITY}/loadAllCities`,
     async () => {
       const cities = await fetchAllCities();
-      return cities.filter((city): city is City => city !== null);
+      return cities;
     },
     {
-      condition: (id, { getState }) => {
+      condition: (_, { getState }) => {
         const { city } = getState() as RootState;
         return city.allCities.status !== 'loading';
       },
     },
   ),
 
-  loadCityById: createAsyncThunk<City | null, string>(
+  loadCityById: createAsyncThunk(
     `${CITY}/loadCityById`,
-    async (id: string) => {
-      const city = await fetchCityById(id);
-      return city;
+    async (arg: Pick<City, 'id'>) => {
+      return await getCity(arg);
     },
     {
-      condition: (id, { getState }) => {
+      condition: (arg, { getState }) => {
         const { city } = getState() as RootState;
-        return city.selectedCity.status !== 'loading';
+
+        const selectedCity = city.selectedCity?.[arg.id]?.city;
+
+        if (!selectedCity) {
+          return true;
+        }
+
+        return selectedCity?.status !== 'loading';
+      },
+    },
+  ),
+
+  loadCityPlace: createAsyncThunk(
+    `${CITY}/loadCityPlace`,
+    async (arg: Pick<City, 'id' | 'key'>) => {
+      return await getCityPlace(arg);
+    },
+    {
+      condition: (arg, { getState }) => {
+        const { city } = getState() as RootState;
+
+        const selectedCityPlace = city.selectedCity?.[arg.id]?.place;
+
+        if (!selectedCityPlace) {
+          return true;
+        }
+
+        return selectedCityPlace?.status !== 'loading';
       },
     },
   ),

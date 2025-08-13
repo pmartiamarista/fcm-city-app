@@ -3,8 +3,6 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { RootStackParamList } from '@/screens/App.navigator';
 
-const useAppNavigation = () => {
+export const useAppNavigation = () => {
   return useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 };
-
-export default useAppNavigation;

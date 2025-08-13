@@ -1,17 +1,16 @@
 import React, { FC, memo } from 'react';
 import { Text, TextProps } from 'react-native';
 
-import { appColors } from '../design-system/colors';
-import { appThemeMode } from '../design-system/theme';
+import { appColors } from '../design-system/colorTypes';
 import {
   DefaultFontType,
   defaultTypographyStyles,
   fontFamilyByWeight,
   HeadingSize,
   headingStylesBySize,
-  typographyColorByMode,
+  textDefaultColor,
   typographyDefaultProps,
-} from '../design-system/typography';
+} from '../design-system/typographyTypes';
 
 export interface TypographyHeadingProps
   extends TextProps,
@@ -22,29 +21,23 @@ const TypographyHeading: FC<TypographyHeadingProps> = memo(
     size = 'h1',
     weight = 'rg',
     style,
-    textColor,
+    textColor = textDefaultColor,
     noLineHeight,
     isLink,
     disabled,
     ...props
   }) => {
-    const themeMode = appThemeMode;
-    const color = textColor
-      ? appColors[textColor]
-      : appColors[typographyColorByMode[themeMode]];
-
     return (
       <Text
         {...typographyDefaultProps}
         {...props}
         style={[
-          { color },
-
+          { color: appColors[textColor] },
+          ...(style ? [style] : []),
           {
             fontSize: headingStylesBySize[size].fontSize,
-            fontFamily: fontFamilyByWeight[weight],
+            fontWeight: fontFamilyByWeight[weight],
           },
-          style,
           {
             ...(!noLineHeight
               ? { lineHeight: headingStylesBySize[size].lineHeight }
