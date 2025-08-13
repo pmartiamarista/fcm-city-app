@@ -2,7 +2,7 @@ import { animated, useSpring } from '@react-spring/native';
 import { FC } from 'react';
 import { Image, StyleSheet } from 'react-native';
 
-import { appColors } from '@/components/design-system/colorsTypes';
+import { appColors } from '@/components/design-system/colorTypes';
 import { appRadius } from '@/components/design-system/radiusTypes';
 import { appShadows } from '@/components/design-system/shadowTypes';
 

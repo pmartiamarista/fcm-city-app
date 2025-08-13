@@ -6,6 +6,7 @@ import { CITY, cityAsyncThunks } from '@/store/slices/cityActions';
 import { citySliceActions } from '@/store/slices/citySlice';
 
 import { City } from '@/graphql/__generated__/graphql';
+import { createActionsStateReturn } from '@/utils/createActionsStateReturn/createActionsStateReturn';
 
 import { useStatus } from '../useStatus';
 
@@ -39,14 +40,14 @@ export const useSelectedCityPlace = (props: UseSelectedCityPlaceProps) => {
     return citySliceActions.clearSelectedCityPlace(props.id);
   }, [props.id]);
 
-  return {
-    state: {
-      ...state,
-      ...useStatus({ status: state.status, data: state.list }),
-    },
-    actions: {
+  return createActionsStateReturn(
+    {
       loadCityPlace,
       clearSelectedCity,
     },
-  };
+    {
+      ...state,
+      ...useStatus({ status: state.status, data: state.list }),
+    },
+  );
 };

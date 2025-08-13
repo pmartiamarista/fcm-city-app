@@ -8,8 +8,9 @@ import ErrorMessage from '@/components/ErrorMessage';
 
 import { City } from '@/graphql/__generated__/graphql';
 
+import { placeListItemStyles } from './placeListTypes';
 import PlaceListItem, { PlaceListItemType } from './tile/PlaceListItem';
-import CityListItemSkeletons from '../city/tile/CityListItemSkeletons';
+import PlaceListItemSkeleton from './tile/PlaceListItemSkeleton';
 import ListEmptyMessage from '../ListEmptyMessage';
 import ListSeparator from '../ListSeparator';
 import { listDefaultProps } from '../listTypes';
@@ -52,10 +53,11 @@ const PlaceList: FC<PlaceListProps> = ({
         style={[
           placeListStyles.container,
           { justifyContent: 'flex-start' },
+          contentContainerStyle,
           style,
         ]}
       >
-        <CityListItemSkeletons />
+        <PlaceListItemSkeleton />
       </View>
     );
   }
@@ -76,8 +78,11 @@ const PlaceList: FC<PlaceListProps> = ({
         extraData={list}
         keyExtractor={(_, index) => String(index)}
         renderItem={(props) => <PlaceListItem {...props} />}
-        style={style}
-        contentContainerStyle={[contentContainerStyle]}
+        style={[{ minHeight: placeListItemStyles.container.height }, style]}
+        contentContainerStyle={[
+          { paddingBottom: appSpacing.xxs3 },
+          contentContainerStyle,
+        ]}
         ItemSeparatorComponent={ListSeparator}
         {...listDefaultProps}
       />
@@ -95,5 +100,6 @@ const placeListStyles = StyleSheet.create({
     flexShrink: 1,
     alignContent: 'center',
     justifyContent: 'center',
+    minHeight: placeListItemStyles.container.height,
   },
 });

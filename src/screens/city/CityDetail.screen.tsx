@@ -1,14 +1,16 @@
 import { useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { useSelectedCity } from '@/hooks/city/useSelectedCity';
-import useAppNavigation from '@/hooks/navigation/useAppNavigation';
-import useAppRouting from '@/hooks/navigation/useAppRouting';
+import { useAppNavigation } from '@/hooks/navigation/useAppNavigation';
+import { useAppRouting } from '@/hooks/navigation/useAppRouting';
 
 import { appSpacing } from '@/components/design-system/spacingTypes';
 import ErrorMessage from '@/components/ErrorMessage';
 import IconButton from '@/components/icon-button/IconButton';
 import LabelValueRow from '@/components/LabelValueRow';
+import { listDefaultProps } from '@/components/list/listTypes';
+import PlaceList from '@/components/list/place/PlaceList';
 import IconButtonSkeleton from '@/components/skeleton/IconButtonSkeleton';
 import TypographyBodySkeleton from '@/components/skeleton/TypographyBodySkeleton';
 import TypographyHeadingSkeleton from '@/components/skeleton/TypographyHeadingSkeleton';
@@ -17,8 +19,7 @@ import TypographyHeading from '@/components/typography/TypographyHeading';
 
 import ImageHeader from '@/layout/ImageHeader';
 import RoundedContainer from '@/layout/RoundedContainer';
-
-import CityPlaceSection from './sections/CityPlaceSection';
+import ScreenSection from '@/layout/ScreenSection';
 
 const image = require('../../../assets/bg/city-bg.png');
 
@@ -39,7 +40,11 @@ export default function CityDetailScreen() {
   }, [clearSelectedCity, loadCityById]);
 
   return (
-    <View style={styles.root}>
+    <ScrollView
+      style={{ flex: 1 }}
+      contentContainerStyle={styles.root}
+      {...listDefaultProps}
+    >
       <View style={styles.headerWrapper}>
         <ImageHeader source={image} isLoaded={isLoaded}>
           {!hasError && (
@@ -83,19 +88,26 @@ export default function CityDetailScreen() {
         <View
           style={{
             paddingTop: appSpacing.sm2,
-            paddingHorizontal: appSpacing.sm3,
+            gap: appSpacing.sm3,
           }}
         >
           {hasError && <ErrorMessage retryAction={loadCityById} />}
           {isLoading && (
-            <View style={{ gap: appSpacing.sm3 }}>
+            <View
+              style={{ gap: appSpacing.sm3, paddingHorizontal: appSpacing.sm3 }}
+            >
               {[180, 140, 160, 190, 100].map((width, index) => {
                 return <TypographyBodySkeleton key={index} style={{ width }} />;
               })}
             </View>
           )}
           {isLoaded && (
-            <View style={{ gap: appSpacing.xxs3 }}>
+            <View
+              style={{
+                flexWrap: 'wrap',
+                paddingHorizontal: appSpacing.sm3,
+              }}
+            >
               {Boolean(item?.currency) && (
                 <LabelValueRow label='Currency' value={item?.currency} />
               )}
@@ -104,10 +116,19 @@ export default function CityDetailScreen() {
               )}
             </View>
           )}
-          {!!item && <CityPlaceSection />}
+          {!!item && (
+            <ScreenSection label='Places'>
+              {!!item && (
+                <PlaceList
+                  item={item}
+                  contentContainerStyle={{ paddingHorizontal: appSpacing.sm3 }}
+                />
+              )}
+            </ScreenSection>
+          )}
         </View>
       </RoundedContainer>
-    </View>
+    </ScrollView>
   );
 }
 

@@ -10,5 +10,5 @@ const ListSeparator = () => {
 export default memo(ListSeparator);
 
 const listSeparatorStyles = StyleSheet.create({
-  container: { height: appSpacing.xxs2 },
+  container: { height: appSpacing.xxs2, width: appSpacing.xxs2 },
 });

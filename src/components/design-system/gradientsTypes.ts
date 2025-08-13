@@ -1,4 +1,4 @@
-import { appColors } from './colorsTypes';
+import { appColors } from './colorTypes';
 
 export const appGradientRgbColors = {
   linearGradient180: '23, 32, 38',

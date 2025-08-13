@@ -4,6 +4,8 @@ import { RootState, useAppDispatch, useAppSelector } from '@/store';
 import { CITY, cityAsyncThunks } from '@/store/slices/cityActions';
 import { citySliceActions } from '@/store/slices/citySlice';
 
+import { createActionsStateReturn } from '@/utils/createActionsStateReturn/createActionsStateReturn';
+
 import { useStatus } from '../useStatus';
 
 const getState = (state: RootState) => state[CITY].allCities;
@@ -20,14 +22,14 @@ export const useAllCities = () => {
     return citySliceActions.clearAllCities();
   }, []);
 
-  return {
-    state: {
-      ...state,
-      ...useStatus({ status: state.status, data: state.list }),
-    },
-    actions: {
+  return createActionsStateReturn(
+    {
       loadAllCities,
       clearAllCities,
     },
-  };
+    {
+      ...state,
+      ...useStatus({ status: state.status, data: state.list }),
+    },
+  );
 };

@@ -1,7 +1,7 @@
 import { memo, useCallback } from 'react';
 import { ListRenderItem, Pressable, View } from 'react-native';
 
-import useAppNavigation from '@/hooks/navigation/useAppNavigation';
+import { useAppNavigation } from '@/hooks/navigation/useAppNavigation';
 
 import { appSpacing } from '@/components/design-system/spacingTypes';
 import IconWrapper from '@/components/IconWrapper';

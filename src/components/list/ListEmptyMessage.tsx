@@ -13,7 +13,7 @@ const ListEmptyMessage = () => {
       ]}
     >
       <TypographyBody weight='md' size='md'>
-        ¡Ups! Esta lista está vacía por ahora.
+        Oops! There's nothing in this list yet.
       </TypographyBody>
     </View>
   );

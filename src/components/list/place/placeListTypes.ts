@@ -5,25 +5,36 @@ import { appRadius } from '@/components/design-system/radiusTypes';
 import { appShadows } from '@/components/design-system/shadowTypes';
 import { appSpacing } from '@/components/design-system/spacingTypes';
 
-export const cityListTileStyles = StyleSheet.create({
+const placeListItemStyles = StyleSheet.create({
   container: {
-    height: 100,
+    height: 220,
+    width: 170,
     borderRadius: appRadius.rounded,
-    width: '100%',
-    padding: appSpacing.xxs2,
   },
   innerContainer: {
-    flexDirection: 'row',
-    alignContent: 'center',
-    gap: appSpacing.xxs2,
     backgroundColor: appColors.neutral100,
     ...appShadows.shadow300,
   },
-  avatarPressed: {
-    backgroundColor: appColors.neutral200,
+  card: {
+    height: '100%',
+    width: '100%',
+    borderRadius: appRadius.rounded,
+    padding: 2,
   },
-  innerContainerPressed: {
-    backgroundColor: appColors.neutral200,
-    ...appShadows.shadow100,
+  chip: {
+    textTransform: 'capitalize',
+  },
+  textWrapper: {
+    flexShrink: 1,
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    paddingHorizontal: appSpacing.xxs2,
+  },
+  title: {
+    textAlign: 'center',
+    textTransform: 'capitalize',
   },
 });
+
+export { placeListItemStyles };

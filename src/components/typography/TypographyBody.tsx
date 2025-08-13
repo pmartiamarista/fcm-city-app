@@ -1,7 +1,7 @@
 import { FC, memo } from 'react';
 import { Text, TextProps } from 'react-native';
 
-import { appColors } from '../design-system/colorsTypes';
+import { appColors } from '../design-system/colorTypes';
 import {
   BodySize,
   bodyStylesBySize,

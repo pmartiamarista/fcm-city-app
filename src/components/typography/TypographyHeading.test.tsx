@@ -3,7 +3,7 @@ import React from 'react';
 import { TextStyle } from 'react-native';
 
 import TypographyHeading from './TypographyHeading';
-import { appColors } from '../design-system/colorsTypes';
+import { appColors } from '../design-system/colorTypes';
 import {
   defaultTypographyStyles,
   fontFamilyByWeight,

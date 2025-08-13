@@ -1,31 +1,51 @@
 import { memo } from 'react';
-import { ListRenderItem, View } from 'react-native';
+import { ListRenderItem, Pressable, View } from 'react-native';
 
-import { appSpacing } from '@/components/design-system/spacingTypes';
+import { useMapLink } from '@/hooks/useMapLink';
+
+import Chip from '@/components/chip/Chip';
 import TypographyBody from '@/components/typography/TypographyBody';
 
 import { GetCityPlaceQuery } from '@/graphql/__generated__/graphql';
+
+import PlaceListItemAvatar from './PlaceListItemAvatar';
+import { placeListItemStyles } from '../placeListTypes';
 
 export type PlaceListItemType = NonNullable<
   GetCityPlaceQuery['allPlaces']
 >[number];
 
 const PlaceListItem: ListRenderItem<PlaceListItemType> = ({ item }) => {
+  const {
+    actions: { openMap },
+  } = useMapLink({ coordinates: item?.place.coordinates });
+
   return (
-    <View>
+    <Pressable onPress={openMap}>
       <View
-        style={{
-          flexShrink: 1,
-          width: '100%',
-          justifyContent: 'center',
-          paddingHorizontal: appSpacing.xxs2,
-        }}
+        style={[
+          placeListItemStyles.container,
+          placeListItemStyles.innerContainer,
+        ]}
       >
-        <View style={{ flexShrink: 1 }}>
-          <TypographyBody>{item?.place.name}</TypographyBody>
+        <View style={placeListItemStyles.card}>
+          <PlaceListItemAvatar>
+            <Chip style={placeListItemStyles.chip}>{item?.place?.type}</Chip>
+          </PlaceListItemAvatar>
+          <View style={placeListItemStyles.textWrapper}>
+            <TypographyBody
+              size='sm'
+              weight='md'
+              numberOfLines={2}
+              ellipsizeMode='tail'
+              style={placeListItemStyles.title}
+            >
+              {item?.place.name}
+            </TypographyBody>
+          </View>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

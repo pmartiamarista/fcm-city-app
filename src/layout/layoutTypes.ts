@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { appColors } from '@/components/design-system/colorsTypes';
+import { appColors } from '@/components/design-system/colorTypes';
 import { appSpacing } from '@/components/design-system/spacingTypes';
 
 const roundedContainerRadius = 52;
@@ -17,7 +17,7 @@ const roundedContainerStyles = StyleSheet.create({
     borderStartEndRadius: roundedContainerRadius,
     borderRadius: roundedContainerRadius,
     gap: appSpacing.sm,
-    backgroundColor: appColors.neutral100,
+    backgroundColor: appColors.neutral50,
   },
 });
 

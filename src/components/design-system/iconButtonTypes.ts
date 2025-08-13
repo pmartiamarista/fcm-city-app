@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { appColors } from './colorsTypes';
+import { appColors } from './colorTypes';
 import { appShadows } from './shadowTypes';
 
 const iconButtonStyles = StyleSheet.create({
@@ -12,7 +12,7 @@ const iconButtonStyles = StyleSheet.create({
     alignItems: 'center',
   },
   elevated: {
-    backgroundColor: appColors.neutral100,
+    backgroundColor: appColors.neutral50,
     ...appShadows.shadow300,
     opacity: 0.85,
   },
