@@ -33,10 +33,10 @@ const TypographyBody: FC<TypographyBodyProps> = memo(
         {...props}
         style={[
           { color: appColors[textColor] },
-          style,
+          ...(style ? [style] : []),
           {
             fontSize: bodyStylesBySize[size].fontSize,
-            fontFamily: fontFamilyByWeight[weight],
+            fontWeight: fontFamilyByWeight[weight],
           },
           {
             ...(!noLineHeight

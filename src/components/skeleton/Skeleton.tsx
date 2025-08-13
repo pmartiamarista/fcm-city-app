@@ -31,6 +31,7 @@ const Skeleton: React.FC<SkeletonProps> = ({
 
   return (
     <AnimatedView
+      testID='skeleton'
       style={[
         { borderRadius: appRadius.rounded },
         style,

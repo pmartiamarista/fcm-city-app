@@ -33,11 +33,11 @@ const TypographyHeading: FC<TypographyHeadingProps> = memo(
         {...props}
         style={[
           { color: appColors[textColor] },
+          ...(style ? [style] : []),
           {
             fontSize: headingStylesBySize[size].fontSize,
-            fontFamily: fontFamilyByWeight[weight],
+            fontWeight: fontFamilyByWeight[weight],
           },
-          style,
           {
             ...(!noLineHeight
               ? { lineHeight: headingStylesBySize[size].lineHeight }

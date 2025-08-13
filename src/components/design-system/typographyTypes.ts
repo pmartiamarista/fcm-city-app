@@ -24,9 +24,9 @@ export const textDefaultColor = 'mainDeepBlue700';
 
 export type FontWeight = 'rg' | 'md';
 
-export const fontFamilyByWeight: Record<FontWeight, string> = {
-  rg: 'SyneRegular',
-  md: 'SyneMedium',
+export const fontFamilyByWeight: Record<FontWeight, TextStyle['fontWeight']> = {
+  rg: 400,
+  md: 500,
 };
 
 export interface DefaultFontType<T> extends Partial<SizeGeneric<T>> {
