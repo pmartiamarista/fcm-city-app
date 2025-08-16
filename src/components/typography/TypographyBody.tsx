@@ -1,7 +1,7 @@
 import { FC, memo } from 'react';
 import { Text, TextProps } from 'react-native';
 
-import { appColors } from '../design-system/colorTypes';
+import { appColors } from '../design-system/color.types';
 import {
   BodySize,
   bodyStylesBySize,
@@ -10,7 +10,7 @@ import {
   fontFamilyByWeight,
   textDefaultColor,
   typographyDefaultProps,
-} from '../design-system/typographyTypes';
+} from '../design-system/typography.types';
 
 export interface TypographyBodyProps
   extends TextProps,

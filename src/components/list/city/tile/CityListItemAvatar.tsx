@@ -2,11 +2,11 @@ import { animated, useSpring } from '@react-spring/native';
 import { FC } from 'react';
 import { Image, StyleSheet } from 'react-native';
 
-import { appColors } from '@/components/design-system/colorTypes';
-import { appRadius } from '@/components/design-system/radiusTypes';
-import { appShadows } from '@/components/design-system/shadowTypes';
+import { appColors } from '@/components/design-system/color.types';
+import { appRadius } from '@/components/design-system/radius.types';
+import { appShadows } from '@/components/design-system/shadow.types';
 
-import { cityListTileStyles } from '../cityListTypes';
+import { cityListTileStyles } from '../city-list.types';
 
 const avatarSize =
   cityListTileStyles.container.height -

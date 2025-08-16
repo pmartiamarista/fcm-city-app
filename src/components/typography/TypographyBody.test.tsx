@@ -3,13 +3,13 @@ import React from 'react';
 import { TextStyle } from 'react-native';
 
 import TypographyBody from './TypographyBody';
-import { appColors } from '../design-system/colorTypes';
+import { appColors } from '../design-system/color.types';
 import {
   bodyStylesBySize,
   defaultTypographyStyles,
   fontFamilyByWeight,
   textDefaultColor,
-} from '../design-system/typographyTypes';
+} from '../design-system/typography.types';
 
 describe('TypographyBody', () => {
   it('renders with default props', () => {

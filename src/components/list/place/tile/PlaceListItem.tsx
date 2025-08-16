@@ -9,7 +9,7 @@ import TypographyBody from '@/components/typography/TypographyBody';
 import { GetCityPlaceQuery } from '@/graphql/__generated__/graphql';
 
 import PlaceListItemAvatar from './PlaceListItemAvatar';
-import { placeListItemStyles } from '../placeListTypes';
+import { placeListItemStyles } from '../place-list.types';
 
 export type PlaceListItemType = NonNullable<
   GetCityPlaceQuery['allPlaces']

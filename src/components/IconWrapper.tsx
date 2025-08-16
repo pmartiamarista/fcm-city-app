@@ -1,8 +1,8 @@
 import { memo } from 'react';
 import { SvgProps } from 'react-native-svg';
 
-import { AppColorAttr, appColors } from './design-system/colorTypes';
-import { AppIconAttr, appIcons } from './design-system/iconTypes';
+import { AppColorAttr, appColors } from './design-system/color.types';
+import { AppIconAttr, appIcons } from './design-system/icon.types';
 
 import { SizeGeneric } from '@/types/generics';
 

@@ -1,9 +1,9 @@
 import { StyleSheet } from 'react-native';
 
-import { appColors } from './colorTypes';
-import { appRadius } from './radiusTypes';
-import { appShadows } from './shadowTypes';
-import { appSpacing } from './spacingTypes';
+import { appColors } from './color.types';
+import { appRadius } from './radius.types';
+import { appShadows } from './shadow.types';
+import { appSpacing } from './spacing.types';
 
 const chipStyles = StyleSheet.create({
   container: {

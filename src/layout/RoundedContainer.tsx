@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren } from 'react';
 import { View, ViewProps } from 'react-native';
 
-import { roundedContainerStyles } from './layoutTypes';
+import { roundedContainerStyles } from './layout.types';
 
 type RoundedContainerProps = PropsWithChildren<ViewProps>;
 

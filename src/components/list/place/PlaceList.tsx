@@ -3,17 +3,17 @@ import { FlatList, FlatListProps, StyleSheet, View } from 'react-native';
 
 import { useSelectedCityPlace } from '@/hooks/city/useSelectedCityPlace';
 
-import { appSpacing } from '@/components/design-system/spacingTypes';
+import { appSpacing } from '@/components/design-system/spacing.types';
 import ErrorMessage from '@/components/ErrorMessage';
 
 import { City } from '@/graphql/__generated__/graphql';
 
-import { placeListItemStyles } from './placeListTypes';
+import { placeListItemStyles } from './place-list.types';
 import PlaceListItem, { PlaceListItemType } from './tile/PlaceListItem';
 import PlaceListItemSkeleton from './tile/PlaceListItemSkeleton';
+import { listDefaultProps } from '../list.types';
 import ListEmptyMessage from '../ListEmptyMessage';
 import ListSeparator from '../ListSeparator';
-import { listDefaultProps } from '../listTypes';
 
 import { ItemGeneric } from '@/types/generics';
 

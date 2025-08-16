@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { appSpacing } from '@/components/design-system/spacingTypes';
+import { appSpacing } from '@/components/design-system/spacing.types';
 import CityList from '@/components/list/city/CityList';
 
 export default function HomeScreen() {

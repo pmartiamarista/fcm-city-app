@@ -7,8 +7,8 @@ import {
   useSelector,
 } from 'react-redux';
 
-import { CITY } from './slices/cityActions';
-import citySlice from './slices/citySlice';
+import { CITY } from './slices/city.actions';
+import citySlice from './slices/city.slice';
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

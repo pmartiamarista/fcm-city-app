@@ -6,7 +6,7 @@ import {
   GetCityPlaceQuery,
 } from '@/graphql/__generated__/graphql';
 
-import { CITY, cityAsyncThunks } from './cityActions';
+import { CITY, cityAsyncThunks } from './city.actions';
 
 import { ItemBaseProps, ListBaseProps } from '@/types/types';
 

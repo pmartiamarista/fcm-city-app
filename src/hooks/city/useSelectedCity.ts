@@ -2,8 +2,8 @@ import { createSelector } from '@reduxjs/toolkit';
 import { useCallback } from 'react';
 
 import { RootState, useAppDispatch, useAppSelector } from '@/store';
-import { CITY, cityAsyncThunks } from '@/store/slices/cityActions';
-import { citySliceActions } from '@/store/slices/citySlice';
+import { CITY, cityAsyncThunks } from '@/store/slices/city.actions';
+import { citySliceActions } from '@/store/slices/city.slice';
 
 import { City } from '@/graphql/__generated__/graphql';
 import { createActionsStateReturn } from '@/utils/createActionsStateReturn/createActionsStateReturn';

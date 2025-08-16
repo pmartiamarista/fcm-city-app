@@ -1,7 +1,7 @@
 import { FC, memo } from 'react';
 
 import Skeleton, { SkeletonProps } from './Skeleton';
-import { iconButtonStyles } from '../design-system/iconButtonTypes';
+import { iconButtonStyles } from '../design-system/icon-button.types';
 
 type IconButtonSkeletonProps = Pick<SkeletonProps, 'style'>;
 

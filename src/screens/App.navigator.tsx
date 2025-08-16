@@ -2,7 +2,7 @@ import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
-import { appColors } from '@/components/design-system/colorTypes';
+import { appColors } from '@/components/design-system/color.types';
 
 import { City } from '@/graphql/__generated__/graphql';
 

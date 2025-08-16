@@ -1,8 +1,8 @@
 import { animated, useSpring } from '@react-spring/native';
 import React, { ComponentProps } from 'react';
 
-import { appColors } from '../design-system/colorTypes';
-import { appRadius } from '../design-system/radiusTypes';
+import { appColors } from '../design-system/color.types';
+import { appRadius } from '../design-system/radius.types';
 
 const AnimatedView = animated.View;
 

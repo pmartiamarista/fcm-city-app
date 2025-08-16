@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { appSpacing } from '../design-system/spacingTypes';
+import { appSpacing } from '../design-system/spacing.types';
 
 const ListSeparator = () => {
   return <View style={listSeparatorStyles.container} />;

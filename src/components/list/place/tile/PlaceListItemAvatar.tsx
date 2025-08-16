@@ -1,9 +1,9 @@
 import { FC, memo, PropsWithChildren } from 'react';
 import { ImageBackground, StyleSheet, View } from 'react-native';
 
-import { appColors } from '@/components/design-system/colorTypes';
-import { appRadius } from '@/components/design-system/radiusTypes';
-import { appSpacing } from '@/components/design-system/spacingTypes';
+import { appColors } from '@/components/design-system/color.types';
+import { appRadius } from '@/components/design-system/radius.types';
+import { appSpacing } from '@/components/design-system/spacing.types';
 
 export type PlaceListItemAvatarProps = PropsWithChildren;
 

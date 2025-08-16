@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 
 import { RootState, useAppDispatch, useAppSelector } from '@/store';
-import { CITY, cityAsyncThunks } from '@/store/slices/cityActions';
-import { citySliceActions } from '@/store/slices/citySlice';
+import { CITY, cityAsyncThunks } from '@/store/slices/city.actions';
+import { citySliceActions } from '@/store/slices/city.slice';
 
 import { createActionsStateReturn } from '@/utils/createActionsStateReturn/createActionsStateReturn';
 
@@ -19,8 +19,8 @@ export const useAllCities = () => {
   }, [dispatch]);
 
   const clearAllCities = useCallback(() => {
-    return citySliceActions.clearAllCities();
-  }, []);
+    return dispatch(citySliceActions.clearAllCities());
+  }, [dispatch]);
 
   return createActionsStateReturn(
     {

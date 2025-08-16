@@ -7,11 +7,11 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { appGradientRgbColors } from '@/components/design-system/gradientsTypes';
-import { appSpacing } from '@/components/design-system/spacingTypes';
+import { appGradientRgbColors } from '@/components/design-system/gradients.types';
+import { appSpacing } from '@/components/design-system/spacing.types';
 import Skeleton from '@/components/skeleton/Skeleton';
 
-import { roundedContainerRadius } from './layoutTypes';
+import { roundedContainerRadius } from './layout.types';
 
 import { Statuses } from '@/types/types';
 
