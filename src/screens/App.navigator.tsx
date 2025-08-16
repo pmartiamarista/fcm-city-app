@@ -2,7 +2,10 @@ import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
+import { useOfflineStatus } from '@/hooks/useOfflineStatus';
+
 import { appColors } from '@/components/design-system/color.types';
+import OfflineBanner from '@/components/OfflineBanner';
 
 import { City } from '@/graphql/__generated__/graphql';
 
@@ -17,18 +20,23 @@ export type RootStackParamList = {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const RootStack = () => {
+  const { isOffline } = useOfflineStatus();
+
   return (
-    <NavigationContainer theme={MyTheme}>
-      <Stack.Navigator
-        initialRouteName='Home'
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name='Home' component={HomeScreen} />
-        <Stack.Screen name='CityDetail' component={CityDetailScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <>
+      <OfflineBanner isVisible={isOffline} />
+      <NavigationContainer theme={MyTheme}>
+        <Stack.Navigator
+          initialRouteName='Home'
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name='Home' component={HomeScreen} />
+          <Stack.Screen name='CityDetail' component={CityDetailScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
 };
 
