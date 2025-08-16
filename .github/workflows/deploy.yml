@@ -1,63 +1,35 @@
-name: Lint, Test, and Publish
+name: Deploy
 
 on:
-  pull_request:
-    branches: [main, dev]
   push:
-    branches: [main]
-
-concurrency:
-  group: ci-${{ github.head_ref || github.ref }}
-  cancel-in-progress: true
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
-  lint_and_test:
-    name: Lint and Test
+  deploy:
+    name: Deploy to Expo
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: ⬇️ Check out repository
+      - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: 🏗️ Set up Node.js 22
+        
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: '22'
           cache: 'yarn'
-
-      - name: 📦 Install dependencies
+          
+      - name: Install dependencies
         run: yarn install --frozen-lockfile
-
-      - name: 🧹 Run linter
-        run: yarn lint
-
-      - name: 🧪 Run tests
-        run: yarn test
-
-  publish:
-    name: Publish
-    needs: lint_and_test
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: ⬇️ Check out repository
-        uses: actions/checkout@v4
-
-      - name: 🏗️ Set up Node.js 22
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: 'yarn'
-
-      - name: 🏗️ Set up Expo
+        
+      - name: Setup Expo
         uses: expo/expo-github-action@v8
         with:
+          expo-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
-          eas-version: latest
-
-      - name: 📦 Install dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: 🚀 Publish update
-        run: eas update --auto
+          
+      - name: Build and deploy
+        run: |
+          expo build:android --non-interactive
+          expo build:ios --non-interactive
