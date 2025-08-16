@@ -1,11 +1,16 @@
-import { FC, memo } from 'react';
+import { FC } from 'react';
+import { View } from 'react-native';
 
 import Skeleton from '@/components/skeleton/Skeleton';
 
 import { placeListItemStyles } from '../place-list.types';
 
 const PlaceListItemSkeleton: FC = () => {
-  return <Skeleton style={[placeListItemStyles.container]} />;
+  return (
+    <View style={placeListItemStyles.container}>
+      <Skeleton style={placeListItemStyles.container} />
+    </View>
+  );
 };
 
-export default memo(PlaceListItemSkeleton);
+export default PlaceListItemSkeleton;

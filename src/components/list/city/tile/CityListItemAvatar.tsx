@@ -1,4 +1,3 @@
-import { animated, useSpring } from '@react-spring/native';
 import { FC } from 'react';
 import { Image, StyleSheet } from 'react-native';
 
@@ -12,18 +11,10 @@ const avatarSize =
   cityListTileStyles.container.height -
   (cityListTileStyles.container.padding || 0) * 2;
 
-const AnimatedImage = animated(Image);
-
 const CityListItemAvatar: FC = () => {
-  const springProps = useSpring({
-    from: { opacity: 0, scale: 0.8 },
-    to: { opacity: 1, scale: 1 },
-    config: { tension: 200, friction: 15, duration: 1000 },
-  });
-
   return (
-    <AnimatedImage
-      style={[cityListItemStyles.container, springProps]}
+    <Image
+      style={[cityListItemStyles.container]}
       source={require('../../../../../assets/bg/city-tile-bg.png')}
     />
   );
