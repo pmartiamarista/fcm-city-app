@@ -336,10 +336,11 @@ src/__mocks__/
 
 - **Triggers**: Push to main, Manual dispatch
 - **Node.js**: Version 22
-- **Expo Integration**:
-  - Android builds
-  - iOS builds
-  - Automated deployment
+- **EAS Build Integration**:
+  - Android builds using `npx eas build --platform android`
+  - iOS builds using `npx eas build --platform ios`
+  - Automated deployment to Expo Application Services
+- **Build Profiles**: Development, preview, and production configurations
 
 ### Quality Gates
 
@@ -395,17 +396,40 @@ module.exports = {
 
 ## 🚀 Deployment
 
+### Build System
+
+The project uses **EAS Build** (Expo Application Services) for building native apps:
+
+- **`eas.json`** - Build profiles and configuration
+- **Development Profile** - Includes development client and debugging tools
+- **Preview Profile** - Internal distribution for testing
+- **Production Profile** - App store ready builds
+
+#### Build System Excellence
+
+**EAS Build Integration**
+
+- Modern build system supporting Node.js 17+
+- Professional-grade build infrastructure
+- Advanced build profiles for different environments
+- Seamless integration with Expo Application Services
+- Enterprise-ready deployment pipeline
+
 ### Build Commands
 
 ```bash
 # Build for Android
-expo build:android --non-interactive
+npx eas build --platform android
 
 # Build for iOS
-expo build:ios --non-interactive
+npx eas build --platform ios
 
 # Build for web
-expo build:web
+npx expo export --platform web
+
+# Build with specific profile
+npx eas build --platform android --profile production
+npx eas build --platform ios --profile preview
 ```
 
 ### Distribution

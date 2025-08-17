@@ -31,5 +31,5 @@ jobs:
           
       - name: Build and deploy
         run: |
-          expo build:android --non-interactive
-          expo build:ios --non-interactive
+          npx eas build --platform android --non-interactive
+          npx eas build --platform ios --non-interactive
