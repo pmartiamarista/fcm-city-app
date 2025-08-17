@@ -35,6 +35,11 @@ const placeListItemStyles = StyleSheet.create({
     textAlign: 'center',
     textTransform: 'capitalize',
   },
+  innerContainerPressed: {
+    transform: [{ scale: 0.99 }],
+    backgroundColor: appColors.neutral200,
+    ...appShadows.shadow100,
+  },
 });
 
 export { placeListItemStyles };

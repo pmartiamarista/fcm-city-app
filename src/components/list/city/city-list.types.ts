@@ -23,6 +23,7 @@ export const cityListTileStyles = StyleSheet.create({
     backgroundColor: appColors.neutral200,
   },
   innerContainerPressed: {
+    transform: [{ scale: 0.99 }],
     backgroundColor: appColors.neutral200,
     ...appShadows.shadow100,
   },
