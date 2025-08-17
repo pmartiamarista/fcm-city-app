@@ -10,7 +10,7 @@ import { City } from '@/graphql/__generated__/graphql';
 
 import { placeListItemStyles } from './place-list.types';
 import PlaceListItem, { PlaceListItemType } from './tile/PlaceListItem';
-import PlaceListItemSkeleton from './tile/PlaceListItemSkeleton';
+import PlaceListItemSkeletons from './tile/PlaceListItemSkeletons';
 import { listDefaultProps } from '../list.types';
 import ListEmptyMessage from '../ListEmptyMessage';
 import ListSeparator from '../ListSeparator';
@@ -52,12 +52,12 @@ const PlaceList: FC<PlaceListProps> = ({
       <View
         style={[
           placeListStyles.container,
-          { justifyContent: 'flex-start' },
+          { justifyContent: 'flex-start', flexDirection: 'row' },
           contentContainerStyle,
           style,
         ]}
       >
-        <PlaceListItemSkeleton />
+        <PlaceListItemSkeletons />
       </View>
     );
   }
