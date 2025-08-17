@@ -1,7 +1,7 @@
 import React, { FC, memo } from 'react';
 import { Text, View, ViewProps } from 'react-native';
 
-import { appColors } from './design-system/colorTypes';
+import { appColors } from './design-system/color.types';
 import TypographyBody from './typography/TypographyBody';
 
 export interface ErrorMessageProps extends Pick<ViewProps, 'style'> {

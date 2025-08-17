@@ -3,7 +3,7 @@ import { ListRenderItem, Pressable, View } from 'react-native';
 
 import { useAppNavigation } from '@/hooks/navigation/useAppNavigation';
 
-import { appSpacing } from '@/components/design-system/spacingTypes';
+import { appSpacing } from '@/components/design-system/spacing.types';
 import IconWrapper from '@/components/IconWrapper';
 
 import { GetCitiesQuery } from '@/graphql/__generated__/graphql';
@@ -11,7 +11,7 @@ import { GetCitiesQuery } from '@/graphql/__generated__/graphql';
 import CitiesListItemAvatar from './CityListItemAvatar';
 import CitiesListItemHeader from './CityListItemHeader';
 import CitiesListItemSubheader from './CityListItemSubheader';
-import { cityListTileStyles } from '../cityListTypes';
+import { cityListTileStyles } from '../city-list.types';
 
 export type CityListItemType = NonNullable<GetCitiesQuery['allCities']>[number];
 

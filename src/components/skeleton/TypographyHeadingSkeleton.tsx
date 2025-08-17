@@ -1,7 +1,7 @@
 import { FC, memo } from 'react';
 
 import Skeleton, { SkeletonProps } from './Skeleton';
-import { headingStylesBySize } from '../design-system/typographyTypes';
+import { headingStylesBySize } from '../design-system/typography.types';
 import { TypographyHeadingProps } from '../typography/TypographyHeading';
 
 type TypographyHeadingSkeletonProps = Pick<TypographyHeadingProps, 'size'> &

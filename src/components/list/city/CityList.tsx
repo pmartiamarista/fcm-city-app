@@ -3,14 +3,14 @@ import { FlatList, FlatListProps, StyleSheet, View } from 'react-native';
 
 import { useAllCities } from '@/hooks/city/useAllCities';
 
-import { appSpacing } from '@/components/design-system/spacingTypes';
+import { appSpacing } from '@/components/design-system/spacing.types';
 import ErrorMessage from '@/components/ErrorMessage';
 
 import CityListItem, { CityListItemType } from './tile/CityListItem';
 import CityListItemSkeletons from './tile/CityListItemSkeletons';
+import { listDefaultProps } from '../list.types';
 import ListEmptyMessage from '../ListEmptyMessage';
 import ListSeparator from '../ListSeparator';
-import { listDefaultProps } from '../listTypes';
 
 const List = FlatList<CityListItemType>;
 

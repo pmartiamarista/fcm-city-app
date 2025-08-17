@@ -5,11 +5,11 @@ import { useSelectedCity } from '@/hooks/city/useSelectedCity';
 import { useAppNavigation } from '@/hooks/navigation/useAppNavigation';
 import { useAppRouting } from '@/hooks/navigation/useAppRouting';
 
-import { appSpacing } from '@/components/design-system/spacingTypes';
+import { appSpacing } from '@/components/design-system/spacing.types';
 import ErrorMessage from '@/components/ErrorMessage';
 import IconButton from '@/components/icon-button/IconButton';
 import LabelValueRow from '@/components/LabelValueRow';
-import { listDefaultProps } from '@/components/list/listTypes';
+import { listDefaultProps } from '@/components/list/list.types';
 import PlaceList from '@/components/list/place/PlaceList';
 import IconButtonSkeleton from '@/components/skeleton/IconButtonSkeleton';
 import TypographyBodySkeleton from '@/components/skeleton/TypographyBodySkeleton';

@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
-import { appColors } from './colorTypes';
-import { appShadows } from './shadowTypes';
+import { appColors } from './color.types';
+import { appShadows } from './shadow.types';
 
 const iconButtonStyles = StyleSheet.create({
   button: {

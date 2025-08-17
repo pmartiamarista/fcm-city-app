@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Pressable, PressableProps, View } from 'react-native';
 
-import { iconButtonStyles } from '../design-system/iconButtonTypes';
+import { iconButtonStyles } from '../design-system/icon-button.types';
 import IconWrapper, { IconWrapperProps } from '../IconWrapper';
 
 interface IconButtonProps

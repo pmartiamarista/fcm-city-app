@@ -1,6 +1,6 @@
 import { StyleSheet, TextProps, TextStyle } from 'react-native';
 
-import { AppColor, appColors } from './colorTypes';
+import { AppColor, appColors } from './color.types';
 
 import { SizeGeneric } from '@/types/generics';
 

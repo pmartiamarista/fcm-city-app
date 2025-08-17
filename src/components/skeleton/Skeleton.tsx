@@ -1,46 +1,55 @@
-import { animated, useSpring } from '@react-spring/native';
-import React, { ComponentProps } from 'react';
+import React, { useEffect } from 'react';
+import { ViewProps } from 'react-native';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withTiming,
+} from 'react-native-reanimated';
 
-import { appColors } from '../design-system/colorTypes';
-import { appRadius } from '../design-system/radiusTypes';
+import { appColors } from '../design-system/color.types';
+import { appRadius } from '../design-system/radius.types';
 
-const AnimatedView = animated.View;
-
-export interface SkeletonProps extends ComponentProps<typeof AnimatedView> {
+export interface SkeletonProps extends ViewProps {
   fadeDuration?: number;
 }
 
 const Skeleton: React.FC<SkeletonProps> = ({
-  fadeDuration = 450,
+  fadeDuration = 1000,
   style,
   children,
+  ...props
 }) => {
-  const [styles] = useSpring(() => ({
-    from: { backgroundColor: appColors.neutral100 },
-    to: async (next) => {
-      while (true) {
-        await next({ backgroundColor: appColors.neutral300 });
-        await next({ backgroundColor: appColors.mainDeepBlue50 });
-        await next({ backgroundColor: appColors.neutral300 });
-        await next({ backgroundColor: appColors.neutral100 });
-      }
-    },
-    config: { duration: fadeDuration },
-    loop: true,
-  }));
+  const opacity = useSharedValue(0.3);
+
+  useEffect(() => {
+    opacity.value = withRepeat(
+      withTiming(1, { duration: fadeDuration }),
+      -1,
+      true,
+    );
+  }, [opacity, fadeDuration]);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      backgroundColor: appColors.neutral200,
+      opacity: opacity.value,
+    };
+  });
 
   return (
-    <AnimatedView
+    <Animated.View
       testID='skeleton'
       style={[
         { borderRadius: appRadius.rounded },
         style,
         { overflow: 'hidden' },
-        styles,
+        animatedStyle,
       ]}
+      {...props}
     >
       {children}
-    </AnimatedView>
+    </Animated.View>
   );
 };
 

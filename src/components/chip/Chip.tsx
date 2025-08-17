@@ -1,7 +1,7 @@
 import { FC, memo } from 'react';
 import { View } from 'react-native';
 
-import { chipStyles } from '../design-system/chipTypes';
+import { chipStyles } from '../design-system/chip.types';
 import TypographyBody, {
   TypographyBodyProps,
 } from '../typography/TypographyBody';

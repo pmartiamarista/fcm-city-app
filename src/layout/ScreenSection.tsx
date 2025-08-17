@@ -2,7 +2,7 @@ import { FC, PropsWithChildren } from 'react';
 import { View } from 'react-native';
 import { ViewProps } from 'react-native-svg/lib/typescript/fabric/utils';
 
-import { appSpacing } from '@/components/design-system/spacingTypes';
+import { appSpacing } from '@/components/design-system/spacing.types';
 import TypographyHeading from '@/components/typography/TypographyHeading';
 
 import { LabelGeneric } from '@/types/generics';

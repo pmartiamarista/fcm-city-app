@@ -28,6 +28,7 @@ export default createConfig([
       '__mocks__',
       'src/graphql/__generated__',
       'jest.config.cjs',
+      'coverage',
     ],
   },
   {

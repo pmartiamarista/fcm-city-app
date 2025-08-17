@@ -1,7 +1,7 @@
 import React, { FC, memo } from 'react';
 import { Text, TextProps } from 'react-native';
 
-import { appColors } from '../design-system/colorTypes';
+import { appColors } from '../design-system/color.types';
 import {
   DefaultFontType,
   defaultTypographyStyles,
@@ -10,7 +10,7 @@ import {
   headingStylesBySize,
   textDefaultColor,
   typographyDefaultProps,
-} from '../design-system/typographyTypes';
+} from '../design-system/typography.types';
 
 export interface TypographyHeadingProps
   extends TextProps,
