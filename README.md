@@ -215,10 +215,10 @@ yarn version:major    # Increment major version (1.0.0 → 2.0.0)
     "prettier": "prettier --write .",
     "dev:check": "prettier --w . && yarn typecheck && yarn lint --fix",
     "gen": "graphql-codegen --config codegen.ts",
-    "build:android": "eas build --platform android",
-    "build:apk": "eas build --platform android --profile preview",
-    "build:ios": "eas build --platform ios --non-interactive",
-    "build:all": "eas build --platform all --non-interactive",
+    "build:android": "eas build --platform android --profile preview --non-interactive",
+    "build:apk": "eas build --platform android --profile preview --non-interactive",
+    "build:ios": "eas build --platform ios --profile preview --non-interactive",
+    "build:all": "eas build --platform all --profile preview --non-interactive",
     "version:show": "Show current package and app versions",
     "version:patch": "Increment patch version (1.0.0 → 1.0.1)",
     "version:minor": "Increment minor version (1.0.0 → 1.1.0)",
@@ -525,8 +525,8 @@ src/__mocks__/
 - **Triggers**: Push to main, Manual dispatch
 - **Node.js**: Version 22
 - **EAS Build Integration**:
-  - Android builds using `npx eas build --platform android`
-  - iOS builds using `npx eas build --platform ios`
+- Android builds using `npx eas build --platform android --profile preview --non-interactive`
+- iOS builds using `npx eas build --platform ios --profile preview --non-interactive`
   - Automated deployment to Expo Application Services
 - **Build Profiles**: Development, preview, and production configurations
 
@@ -599,6 +599,12 @@ The project uses **EAS Build** (Expo Application Services) for building native a
 - APK files are easier to install directly on devices
 - Perfect for testing, internal distribution, and direct installation
 
+**Non-Interactive Builds:**
+
+- All build scripts include `--non-interactive` flag for CI/CD compatibility
+- Prevents build failures in automated environments (GitHub Actions, etc.)
+- Builds work seamlessly in both local development and CI/CD pipelines
+
 #### Build System Excellence
 
 **EAS Build Integration**
@@ -613,20 +619,20 @@ The project uses **EAS Build** (Expo Application Services) for building native a
 
 ```bash
 # Build for Android
-npx eas build --platform android
+npx eas build --platform android --profile preview --non-interactive
 
 # Build APK files (easier to install)
-npx eas build --platform android --profile preview
+npx eas build --platform android --profile preview --non-interactive
 
 # Build for iOS
-npx eas build --platform ios
+npx eas build --platform ios --profile preview --non-interactive
 
 # Build for web
 npx expo export --platform web
 
 # Build with specific profile
-npx eas build --platform android --profile production
-npx eas build --platform ios --profile preview
+npx eas build --platform android --profile production --non-interactive
+npx eas build --platform ios --profile preview --non-interactive
 
 # Using package.json scripts
 yarn build:android
@@ -640,6 +646,7 @@ yarn build:all
 - **GitHub Actions** automatically installs EAS CLI
 - **Build Scripts** ensure consistent build commands
 - **Non-interactive Mode** for automated deployments
+- **`--non-interactive` flag** prevents CI/CD failures from interactive prompts
 
 ### Distribution
 
