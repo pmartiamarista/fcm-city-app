@@ -1,6 +1,6 @@
 {
   "name": "fcm-city-app",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "index.ts",
   "type": "module",
   "scripts": {
@@ -19,13 +19,13 @@
     "test:watch": "jest --watch",
     "gen": "graphql-codegen",
     "gen:watch": "graphql-codegen --watch",
-    "build:android": "eas build --platform android --profile preview",
-    "build:ios": "eas build --platform ios --profile preview",
-    "build:dev": "eas build --platform all --profile preview",
-    "version:show": "node -e \"const pkg=require('./package.json');const app=require('./app.json');console.log('📦 Package version:', pkg.version);console.log('📱 App version:', app.expo.version);\"",
-    "version:patch": "node -e \"const fs=require('fs');const pkg=JSON.parse(fs.readFileSync('package.json'));const app=JSON.parse(fs.readFileSync('app.json'));const [major,minor,patch]=pkg.version.split('.');const newVersion=major+'.'+minor+'.'+(parseInt(patch)+1);pkg.version=newVersion;app.expo.version=newVersion;fs.writeFileSync('package.json',JSON.stringify(pkg,null,2));fs.writeFileSync('app.json',JSON.stringify(app,null,2));console.log('✅ Version bumped to '+newVersion);\"",
-    "version:minor": "node -e \"const fs=require('fs');const pkg=JSON.parse(fs.readFileSync('package.json'));const app=JSON.parse(fs.readFileSync('app.json'));const [major,minor,patch]=pkg.version.split('.');const newVersion=major+'.'+(parseInt(minor)+1)+'.0';pkg.version=newVersion;app.expo.version=newVersion;fs.writeFileSync('package.json',JSON.stringify(pkg,null,2));fs.writeFileSync('app.json',JSON.stringify(app,null,2));console.log('✅ Version bumped to '+newVersion);\"",
-    "version:major": "node -e \"const fs=require('fs');const pkg=JSON.parse(fs.readFileSync('package.json'));const app=JSON.parse(fs.readFileSync('app.json'));const [major,minor,patch]=pkg.version.split('.');const newVersion=(parseInt(major)+1)+'.0.0';pkg.version=newVersion;app.expo.version=newVersion;fs.writeFileSync('package.json',JSON.stringify(pkg,null,2));fs.writeFileSync('app.json',JSON.stringify(app,null,2));console.log('✅ Version bumped to '+newVersion);\""
+    "build:android": "eas build --platform android --profile preview --non-interactive",
+    "build:ios": "eas build --platform ios --profile preview --non-interactive",
+    "build:dev": "eas build --platform all --profile preview --non-interactive",
+    "version:show": "npx tsx scripts/version.ts show",
+    "version:patch": "npx tsx scripts/version.ts patch",
+    "version:minor": "npx tsx scripts/version.ts minor",
+    "version:major": "npx tsx scripts/version.ts major"
   },
   "dependencies": {
     "@react-native-community/netinfo": "11.4.1",
