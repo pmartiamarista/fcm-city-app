@@ -86,9 +86,10 @@ The HTML coverage reports demonstrate:
 
 1. **Push to Main** triggers the workflow
 2. **Version Bump** automatically increments patch version (1.0.0 → 1.0.1)
-3. **Commit & Push** the version change back to repository
-4. **Deploy** builds and deploys the new version
-5. **Summary** shows deployment status and version info
+3. **Build & Deploy** uses the new version for the deployment
+4. **Summary** shows deployment status and version info
+
+**Note:** The version bump is applied to the build artifacts but not committed back to the repository. This prevents workflow conflicts while ensuring each deployment has a unique version.
 
 **Version Strategy:**
 
