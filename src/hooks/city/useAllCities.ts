@@ -1,18 +1,19 @@
 import { useCallback } from 'react';
 
-import { RootState, useAppDispatch, useAppSelector } from '@/store';
-import { CITY, cityAsyncThunks } from '@/store/slices/city.actions';
-import { citySliceActions } from '@/store/slices/city.slice';
+import { useAppDispatch, useAppSelector } from '@/store';
+import {
+  cityAsyncThunks,
+  citySliceActions,
+  selectAllCities,
+} from '@/store/slices/city';
 
 import { createActionsStateReturn } from '@/utils/createActionsStateReturn/createActionsStateReturn';
 
 import { useStatus } from '../useStatus';
 
-const getState = (state: RootState) => state[CITY].allCities;
-
 export const useAllCities = () => {
   const dispatch = useAppDispatch();
-  const state = useAppSelector(getState);
+  const allCities = useAppSelector(selectAllCities);
 
   const loadAllCities = useCallback(async () => {
     return dispatch(cityAsyncThunks.loadAllCities());
@@ -28,8 +29,8 @@ export const useAllCities = () => {
       clearAllCities,
     },
     {
-      ...state,
-      ...useStatus({ status: state.status, data: state.list }),
+      ...allCities,
+      ...useStatus({ status: allCities.status, data: allCities.list }),
     },
   );
 };

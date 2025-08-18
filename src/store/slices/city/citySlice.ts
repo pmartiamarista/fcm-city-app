@@ -1,40 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import {
-  City,
-  GetCitiesQuery,
-  GetCityPlaceQuery,
-} from '@/graphql/__generated__/graphql';
+import { City } from '@/graphql/__generated__/graphql';
 
-import { CITY, cityAsyncThunks } from './city.actions';
-
-import { ItemBaseProps, ListBaseProps } from '@/types/types';
-
-interface CityState {
-  allCities: ListBaseProps<NonNullable<GetCitiesQuery['allCities']>>;
-  selectedCity: Record<
-    City['id'],
-    {
-      city: ItemBaseProps<City | null>;
-      place: ListBaseProps<NonNullable<GetCityPlaceQuery['allPlaces']>>;
-    }
-  >;
-}
-
-const initialState: CityState = {
-  allCities: {
-    status: 'idle',
-    list: [],
-  },
-  selectedCity: {},
-};
+import { cityAsyncThunks } from './actions';
+import { CITY } from './constants';
+import { cityInitialState } from './initialState';
 
 const citySlice = createSlice({
   name: CITY,
-  initialState,
+  initialState: cityInitialState,
   reducers: {
     clearAllCities(state) {
-      state.allCities = initialState.allCities;
+      state.allCities = cityInitialState.allCities;
     },
     clearSelectedCity(state, { payload }: PayloadAction<City['id']>) {
       state.selectedCity[payload].city.status = 'idle';

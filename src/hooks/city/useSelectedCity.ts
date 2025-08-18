@@ -1,9 +1,11 @@
-import { createSelector } from '@reduxjs/toolkit';
 import { useCallback } from 'react';
 
-import { RootState, useAppDispatch, useAppSelector } from '@/store';
-import { CITY, cityAsyncThunks } from '@/store/slices/city.actions';
-import { citySliceActions } from '@/store/slices/city.slice';
+import { useAppDispatch, useAppSelector } from '@/store';
+import {
+  cityAsyncThunks,
+  citySliceActions,
+  selectCityById,
+} from '@/store/slices/city';
 
 import { City } from '@/graphql/__generated__/graphql';
 import { createActionsStateReturn } from '@/utils/createActionsStateReturn/createActionsStateReturn';
@@ -12,31 +14,17 @@ import { useStatus } from '../useStatus';
 
 type UseSelectedCityProps = Pick<City, 'id'>;
 
-const getState = (state: RootState) => state[CITY].selectedCity;
-
-const getResourceSelector = createSelector(
-  [
-    getState,
-    (_, payload: UseSelectedCityProps) => {
-      return payload.id;
-    },
-  ],
-  (city, id) => {
-    return city[id]?.city || { status: 'idle', item: null };
-  },
-);
-
 export const useSelectedCity = (props: UseSelectedCityProps) => {
   const dispatch = useAppDispatch();
-  const state = useAppSelector((state) => getResourceSelector(state, props));
+  const city = useAppSelector(selectCityById(props.id));
 
   const loadCityById = useCallback(async () => {
     return dispatch(cityAsyncThunks.loadCityById({ id: props?.id }));
   }, [dispatch, props?.id]);
 
   const clearSelectedCity = useCallback(() => {
-    return citySliceActions.clearSelectedCity(props.id);
-  }, [props.id]);
+    return dispatch(citySliceActions.clearSelectedCity(props.id));
+  }, [dispatch, props.id]);
 
   return createActionsStateReturn(
     {
@@ -44,8 +32,8 @@ export const useSelectedCity = (props: UseSelectedCityProps) => {
       clearSelectedCity,
     },
     {
-      ...state,
-      ...useStatus({ status: state.status, data: state.item }),
+      ...city,
+      ...useStatus({ status: city.status, data: city.item }),
     },
   );
 };

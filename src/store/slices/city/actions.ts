@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
+import { RootState } from '@/store';
+
 import { fetchAllCities, getCity, getCityPlace } from '@/api/cityService';
 import { City } from '@/graphql/__generated__/graphql';
 
-import { RootState } from '..';
-
-export const CITY = 'city';
+import { CITY } from './constants';
 
 export const cityAsyncThunks = {
   loadAllCities: createAsyncThunk(

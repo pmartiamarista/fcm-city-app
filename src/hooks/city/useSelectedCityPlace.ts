@@ -1,9 +1,11 @@
-import { createSelector } from '@reduxjs/toolkit';
 import { useCallback } from 'react';
 
-import { RootState, useAppDispatch, useAppSelector } from '@/store';
-import { CITY, cityAsyncThunks } from '@/store/slices/city.actions';
-import { citySliceActions } from '@/store/slices/city.slice';
+import { useAppDispatch, useAppSelector } from '@/store';
+import {
+  cityAsyncThunks,
+  citySliceActions,
+  selectCityPlace,
+} from '@/store/slices/city';
 
 import { City } from '@/graphql/__generated__/graphql';
 import { createActionsStateReturn } from '@/utils/createActionsStateReturn/createActionsStateReturn';
@@ -12,23 +14,9 @@ import { useStatus } from '../useStatus';
 
 type UseSelectedCityPlaceProps = Pick<City, 'id' | 'key'>;
 
-const getState = (state: RootState) => state[CITY].selectedCity;
-
-const getResourceSelector = createSelector(
-  [
-    getState,
-    (_, payload: UseSelectedCityPlaceProps) => {
-      return payload.id;
-    },
-  ],
-  (city, id) => {
-    return city[id]?.place || { status: 'idle', item: null };
-  },
-);
-
 export const useSelectedCityPlace = (props: UseSelectedCityPlaceProps) => {
   const dispatch = useAppDispatch();
-  const state = useAppSelector((state) => getResourceSelector(state, props));
+  const place = useAppSelector(selectCityPlace(props.id));
 
   const loadCityPlace = useCallback(async () => {
     return dispatch(
@@ -37,8 +25,8 @@ export const useSelectedCityPlace = (props: UseSelectedCityPlaceProps) => {
   }, [dispatch, props?.id, props?.key]);
 
   const clearSelectedCity = useCallback(() => {
-    return citySliceActions.clearSelectedCityPlace(props.id);
-  }, [props.id]);
+    return dispatch(citySliceActions.clearSelectedCityPlace(props.id));
+  }, [dispatch, props.id]);
 
   return createActionsStateReturn(
     {
@@ -46,8 +34,8 @@ export const useSelectedCityPlace = (props: UseSelectedCityPlaceProps) => {
       clearSelectedCity,
     },
     {
-      ...state,
-      ...useStatus({ status: state.status, data: state.list }),
+      ...place,
+      ...useStatus({ status: place.status, data: place.list }),
     },
   );
 };

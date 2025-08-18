@@ -4,8 +4,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 
 import { store } from './index';
-import { cityAsyncThunks } from './slices/city.actions';
-import citySlice, { citySliceActions } from './slices/city.slice';
+import { cityAsyncThunks, citySlice, citySliceActions } from './slices/city';
 
 // Mock the API service
 jest.mock('@/api/cityService', () => ({

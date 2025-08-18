@@ -289,7 +289,16 @@ src/
 │   ├── skeleton/       # Animated loading states
 │   └── list/          # List components
 ├── hooks/              # Custom React hooks
-├── store/              # Redux store and slices
+├── store/              # Redux store and organized slices
+│   ├── slices/         # Feature-based slice organization
+│   │   └── city/       # City state management
+│   │       ├── actions.ts      # Async thunks
+│   │       ├── citySlice.ts    # Redux slice
+│   │       ├── constants.ts    # Slice constants
+│   │       ├── initialState.ts # State interface & initial values
+│   │       ├── selectors.ts    # Memoized selectors
+│   │       └── index.ts        # Barrel exports
+│   └── index.ts        # Store configuration
 ├── graphql/            # GraphQL queries and client
 │   ├── __generated__/  # Auto-generated TypeScript types
 │   └── config/         # GraphQL client configuration
@@ -302,9 +311,42 @@ src/
 ### State Management
 
 - **Redux Toolkit** for global state
-- **Async Thunks** for API operations
+- **Feature-based Organization** with organized slice structure
+- **Async Thunks** for API operations with smart request deduplication
 - **Normalized State** for efficient data access
 - **Type-safe Actions** with TypeScript
+- **Memoized Selectors** for performance optimization
+- **Centralized Constants** for maintainability
+- **Barrel Exports** for clean imports
+
+### Redux Architecture
+
+The app uses a **feature-based Redux architecture** with organized slice structure:
+
+```typescript
+// Clean imports from barrel exports
+import { cityAsyncThunks, citySliceActions, selectAllCities } from '@/store/slices/city';
+
+// Centralized constants
+export const CITY = 'city';
+
+// Organized file structure
+src/store/slices/city/
+├── constants.ts        # Slice constants (CITY = 'city')
+├── actions.ts          # Async thunks with request deduplication
+├── initialState.ts     # State interface and initial values
+├── citySlice.ts        # Redux slice with reducers and extraReducers
+├── selectors.ts        # Memoized selectors for performance
+└── index.ts           # Barrel exports for clean imports
+```
+
+**Key Benefits:**
+
+- **Maintainability**: Related code is grouped together
+- **Performance**: Memoized selectors prevent unnecessary re-renders
+- **Type Safety**: Full TypeScript integration with GraphQL types
+- **Clean Imports**: Single import from feature barrel
+- **Constants**: Centralized slice naming for consistency
 
 ### Animation Architecture
 
@@ -321,7 +363,7 @@ src/
 - **Coverage Reporting** with HTML dashboards
 - **Component Testing** for all UI elements
 - **Hook Testing** for custom React hooks
-- **Store Testing** for Redux state management
+- **Store Testing** for Redux state management with organized slices
 - **Integration Testing** for user workflows
 
 #### Testing Infrastructure
@@ -345,6 +387,33 @@ src/__mocks__/
 - **Branch Coverage** for complex logic paths
 - **Integration Coverage** for user flows
 - **Professional HTML Reports** for development insights
+
+#### Redux Testing Strategy
+
+The app includes comprehensive Redux testing with the new organized structure:
+
+```typescript
+// Test imports from organized slices
+import { cityAsyncThunks, citySlice } from '@/store/slices/city';
+
+// Test store configuration
+const store = configureStore({
+  reducer: { city: citySlice },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }),
+});
+
+// Test async thunks and slice behavior
+await store.dispatch(cityAsyncThunks.loadAllCities());
+expect(store.getState().city.allCities.status).toBe('succeeded');
+```
+
+**Testing Features:**
+
+- **Slice Testing**: Reducers, extraReducers, and actions
+- **Async Thunk Testing**: API operations and state updates
+- **Selector Testing**: Memoized selector performance
+- **Integration Testing**: Full Redux flow testing
 
 ## 🎨 Advanced Animations
 
