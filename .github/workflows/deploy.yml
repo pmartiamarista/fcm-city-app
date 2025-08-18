@@ -36,16 +36,18 @@ jobs:
           expo-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
           
-      - name: Build and deploy
+      - name: Build development versions
         run: |
-          echo "🏗️ Building version ${{ steps.get-version.outputs.app_version }}"
+          echo "🏗️ Building development version ${{ steps.get-version.outputs.app_version }}"
           yarn build:android
           yarn build:ios
           
       - name: Deployment summary
         run: |
-          echo "✅ Deployment completed successfully!"
+          echo "✅ Development build completed successfully!"
           echo "📱 App version: ${{ steps.get-version.outputs.app_version }}"
-          echo "🎯 Build profiles: development, preview, production"
+          echo "🎯 Build profile: development (physical device ready)"
           echo "🔗 Check EAS dashboard for build status"
+          echo "📱 Android: APK file for testing"
+          echo "🍎 iOS: Simulator build (no credentials required)"
           

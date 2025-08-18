@@ -9,21 +9,11 @@
       "distribution": "internal",
       "android": {
         "buildType": "apk"
-      }
-    },
-    "preview": {
-      "distribution": "internal",
-      "android": {
-        "buildType": "apk"
-      }
-    },
-    "production": {
-      "android": {
-        "buildType": "apk"
+      },
+      "ios": {
+        "simulator": true,
+        "buildConfiguration": "Debug"
       }
     }
-  },
-  "submit": {
-    "production": {}
   }
 }
