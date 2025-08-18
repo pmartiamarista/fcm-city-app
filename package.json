@@ -21,7 +21,10 @@
     "gen:watch": "graphql-codegen --watch",
     "build:android": "eas build --platform android",
     "build:ios": "eas build --platform ios",
-    "build:all": "eas build --platform all"
+    "build:all": "eas build --platform all",
+    "version:patch": "node -e \"const fs=require('fs');const pkg=JSON.parse(fs.readFileSync('package.json'));const app=JSON.parse(fs.readFileSync('app.json'));const [major,minor,patch]=pkg.version.split('.');const newVersion=major+'.'+minor+'.'+(parseInt(patch)+1);pkg.version=newVersion;app.expo.version=newVersion;fs.writeFileSync('package.json',JSON.stringify(pkg,null,2));fs.writeFileSync('app.json',JSON.stringify(app,null,2));console.log('Version bumped to '+newVersion);\"",
+    "version:minor": "node -e \"const fs=require('fs');const pkg=JSON.parse(fs.readFileSync('package.json'));const app=JSON.parse(fs.readFileSync('app.json'));const [major,minor,patch]=pkg.version.split('.');const newVersion=major+'.'+(parseInt(minor)+1)+'.0';pkg.version=newVersion;app.expo.version=newVersion;fs.writeFileSync('package.json',JSON.stringify(pkg,null,2));fs.writeFileSync('app.json',JSON.stringify(app,null,2));console.log('Version bumped to '+newVersion);\"",
+    "version:major": "node -e \"const fs=require('fs');const pkg=JSON.parse(fs.readFileSync('package.json'));const app=JSON.parse(fs.readFileSync('app.json'));const [major,minor,patch]=pkg.version.split('.');const newVersion=(parseInt(major)+1)+'.0.0';pkg.version=newVersion;app.expo.version=newVersion;fs.writeFileSync('package.json',JSON.stringify(pkg,null,2));fs.writeFileSync('app.json',JSON.stringify(app,null,2));console.log('Version bumped to '+newVersion);\""
   },
   "dependencies": {
     "@react-native-community/netinfo": "11.4.1",
@@ -47,7 +50,6 @@
     "zod": "^4.0.17"
   },
   "devDependencies": {
-    "eas-cli": "^16.17.4",
     "@graphql-codegen/cli": "^5.0.7",
     "@graphql-codegen/typescript": "^4.1.6",
     "@graphql-codegen/typescript-graphql-request": "^6.3.0",
@@ -59,7 +61,8 @@
     "@typescript-eslint/eslint-plugin": "^8.38.0",
     "@typescript-eslint/parser": "^8.38.0",
     "babel-plugin-module-resolver": "^5.0.2",
-    "babel-preset-expo": "^13.2.3",
+    "babel-preset-expo": "~13.0.0",
+    "eas-cli": "^16.17.4",
     "eslint": "^9.32.0",
     "eslint-config-expo": "^9.2.0",
     "eslint-config-prettier": "^10.1.8",
@@ -77,7 +80,7 @@
     "prettier": "^3.6.2",
     "react-test-renderer": "19.0.0",
     "ts-jest": "^29.4.1",
-    "typescript": "^5.9.2",
+    "typescript": "~5.8.3",
     "typescript-eslint": "^8.38.0"
   },
   "lint-staged": {
@@ -86,6 +89,13 @@
       "yarn dev:check"
     ],
     "*.{json,md,css}": "prettier --write"
+  },
+  "expo": {
+    "doctor": {
+      "reactNativeDirectoryCheck": {
+        "listUnknownPackages": false
+      }
+    }
   },
   "private": true
 }

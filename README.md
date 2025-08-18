@@ -77,6 +77,39 @@ The HTML coverage reports demonstrate:
 - **Code Quality Gates** - Prettier, ESLint, TypeScript
 - **Test Automation** - Automated test execution
 - **Coverage Reporting** - Code coverage tracking
+- **Automated Version Management** - Auto-increment app version on main branch
+- **Seamless Deployment** - Version bump → Build → Deploy pipeline
+
+### Automated Version Management 🚀
+
+**How It Works:**
+
+1. **Push to Main** triggers the workflow
+2. **Version Bump** automatically increments patch version (1.0.0 → 1.0.1)
+3. **Commit & Push** the version change back to repository
+4. **Deploy** builds and deploys the new version
+5. **Summary** shows deployment status and version info
+
+**Version Strategy:**
+
+- **Patch** (1.0.0 → 1.0.1): Bug fixes, minor improvements
+- **Minor** (1.0.0 → 1.1.0): New features, backward compatible
+- **Major** (1.0.0 → 2.0.0): Breaking changes, major updates
+
+**Manual Version Control:**
+
+```bash
+yarn version:patch    # For bug fixes
+yarn version:minor    # For new features
+yarn version:major    # For breaking changes
+```
+
+**Benefits:**
+
+- **Consistent Versioning** - No more manual version updates
+- **Deployment Tracking** - Clear version history for each deployment
+- **Professional Workflow** - Industry-standard CI/CD practices
+- **Audit Trail** - Git history shows all version changes
 
 ## 🛠️ Tech Stack
 
@@ -158,6 +191,11 @@ yarn prettier --write .
 
 # Generate GraphQL types
 yarn gen
+
+# Version Management (Manual)
+yarn version:patch    # Increment patch version (1.0.0 → 1.0.1)
+yarn version:minor    # Increment minor version (1.0.0 → 1.1.0)
+yarn version:major    # Increment major version (1.0.0 → 2.0.0)
 ```
 
 ### Available Scripts
