@@ -1,14 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { act } from '@testing-library/react-native';
 
-import { cityAsyncThunks } from './city.actions';
-import citySlice from './city.slice';
+import { cityAsyncThunks, citySlice } from './city';
 
 // Mock the API service
 jest.mock('@/api/cityService', () => ({
-  fetchAllCities: jest.fn(),
-  getCity: jest.fn(),
-  getCityPlace: jest.fn(),
+  fetchAllCities: jest.fn(async () => ({ allCities: [] })),
+  getCity: jest.fn(async () => ({ id: '1', name: 'Mock City' })),
+  getCityPlace: jest.fn(async () => ({ allPlaces: [] })),
 }));
 
 const createTestStore = () => {
@@ -20,6 +19,20 @@ const createTestStore = () => {
       getDefaultMiddleware({ serializableCheck: false }),
   });
 };
+
+describe('cityAsyncThunks', () => {
+  let store: ReturnType<typeof createTestStore>;
+
+  beforeEach(() => {
+    store = createTestStore();
+  });
+
+  it('should load all cities successfully', async () => {
+    await store.dispatch(cityAsyncThunks.loadAllCities());
+    const state = store.getState();
+    expect(state).toBeDefined();
+  });
+});
 
 describe('City Actions', () => {
   let store: ReturnType<typeof createTestStore>;

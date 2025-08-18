@@ -1,7 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { cityAsyncThunks } from '@/store/slices/city.actions';
-import citySlice from '@/store/slices/city.slice';
+import { cityAsyncThunks, citySlice } from '@/store/slices/city';
 
 import { City } from '@/graphql/__generated__/graphql';
 
@@ -18,6 +17,10 @@ export const createMockStore = () => {
       getDefaultMiddleware({ serializableCheck: false }),
   });
 };
+
+export { cityAsyncThunks };
+
+export type AppTestStore = ReturnType<typeof createMockStore>;
 
 /**
  * Mock async thunk action creators for testing
