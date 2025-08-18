@@ -31,5 +31,5 @@ jobs:
           
       - name: Build and deploy
         run: |
-          npx eas build --platform android --non-interactive
-          npx eas build --platform ios --non-interactive
+          yarn build:android
+          yarn build:ios
