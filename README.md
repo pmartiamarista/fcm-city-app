@@ -72,24 +72,22 @@ The HTML coverage reports demonstrate:
 
 ### CI/CD Pipeline 🔄
 
-- **GitHub Actions** - Automated quality checks
+- **GitHub Actions** - Automated quality checks and deployment
 - **Node.js 22** - Latest LTS version
 - **Code Quality Gates** - Prettier, ESLint, TypeScript
 - **Test Automation** - Automated test execution
 - **Coverage Reporting** - Code coverage tracking
-- **Automated Version Management** - Auto-increment app version on main branch
-- **Seamless Deployment** - Version bump → Build → Deploy pipeline
+- **Seamless Deployment** - Build → Deploy pipeline
+- **EAS Build Integration** - Cloud-based native app builds
 
-### Automated Version Management 🚀
+### Manual Version Management 🚀
 
 **How It Works:**
 
-1. **Push to Main** triggers the workflow
-2. **Version Bump** automatically increments patch version (1.0.0 → 1.0.1)
-3. **Build & Deploy** uses the new version for the deployment
-4. **Summary** shows deployment status and version info
-
-**Note:** The version bump is applied to the build artifacts but not committed back to the repository. This prevents workflow conflicts while ensuring each deployment has a unique version.
+1. **Development** - Work on features with current version
+2. **Version Bump** - Manually bump version when ready to release
+3. **Merge to Main** - Push version changes to trigger deployment
+4. **Build & Deploy** - CI automatically builds and deploys
 
 **Version Strategy:**
 
@@ -97,7 +95,7 @@ The HTML coverage reports demonstrate:
 - **Minor** (1.0.0 → 1.1.0): New features, backward compatible
 - **Major** (1.0.0 → 2.0.0): Breaking changes, major updates
 
-**Manual Version Control:**
+**Available Commands:**
 
 ```bash
 yarn version:patch    # For bug fixes
@@ -216,7 +214,15 @@ yarn version:major    # Increment major version (1.0.0 → 2.0.0)
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "prettier": "prettier --write .",
     "dev:check": "prettier --w . && yarn typecheck && yarn lint --fix",
-    "gen": "graphql-codegen --config codegen.ts"
+    "gen": "graphql-codegen --config codegen.ts",
+    "build:android": "eas build --platform android",
+    "build:apk": "eas build --platform android --profile preview",
+    "build:ios": "eas build --platform ios --non-interactive",
+    "build:all": "eas build --platform all --non-interactive",
+    "version:show": "Show current package and app versions",
+    "version:patch": "Increment patch version (1.0.0 → 1.0.1)",
+    "version:minor": "Increment minor version (1.0.0 → 1.1.0)",
+    "version:major": "Increment major version (1.0.0 → 2.0.0)"
   }
 }
 ```
@@ -515,8 +521,14 @@ The project uses **EAS Build** (Expo Application Services) for building native a
 
 - **`eas.json`** - Build profiles and configuration
 - **Development Profile** - Includes development client and debugging tools
-- **Preview Profile** - Internal distribution for testing
-- **Production Profile** - App store ready builds
+- **Preview Profile** - Internal distribution for testing (generates APK files)
+- **Production Profile** - App store ready builds (generates APK files)
+
+**APK Builds:**
+
+- All Android build profiles now generate APK files instead of AAB
+- APK files are easier to install directly on devices
+- Perfect for testing, internal distribution, and direct installation
 
 #### Build System Excellence
 
@@ -534,6 +546,9 @@ The project uses **EAS Build** (Expo Application Services) for building native a
 # Build for Android
 npx eas build --platform android
 
+# Build APK files (easier to install)
+npx eas build --platform android --profile preview
+
 # Build for iOS
 npx eas build --platform ios
 
@@ -546,6 +561,7 @@ npx eas build --platform ios --profile preview
 
 # Using package.json scripts
 yarn build:android
+yarn build:apk          # Quick APK build
 yarn build:ios
 yarn build:all
 ```
