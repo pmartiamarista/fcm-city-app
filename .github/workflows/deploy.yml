@@ -13,9 +13,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          
+        
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -45,7 +43,8 @@ jobs:
           echo "New version: $NEW_VERSION"
           echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
           
-          # Update app.json with new version
+          # Update app.json with new version for this build
+          # Note: This is only for the build artifacts, not committed back to repo
           node -e "
             const fs = require('fs');
             const appJson = JSON.parse(fs.readFileSync('./app.json', 'utf8'));
@@ -63,15 +62,7 @@ jobs:
             "
           fi
           
-          echo "Version bumped from $CURRENT_VERSION to $NEW_VERSION"
-          
-      - name: Commit version bump
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add app.json package.json
-          git commit -m "chore: bump app version to ${{ steps.bump-version.outputs.new_version }} [skip ci]"
-          git push
+          echo "Version bumped from $CURRENT_VERSION to $NEW_VERSION for this build"
           
       - name: Output new version
         run: |
