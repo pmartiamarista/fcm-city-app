@@ -6,73 +6,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  version-bump:
-    name: Bump App Version
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: 'yarn'
-          
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-        
-      - name: Bump version
-        id: bump-version
-        run: |
-          # Read current version from app.json
-          CURRENT_VERSION=$(node -p "require('./app.json').expo.version")
-          echo "Current version: $CURRENT_VERSION"
-          
-          # Split version into parts
-          IFS='.' read -ra VERSION_PARTS <<< "$CURRENT_VERSION"
-          MAJOR=${VERSION_PARTS[0]}
-          MINOR=${VERSION_PARTS[1]}
-          PATCH=${VERSION_PARTS[2]}
-          
-          # Increment patch version
-          NEW_PATCH=$((PATCH + 1))
-          NEW_VERSION="$MAJOR.$MINOR.$NEW_PATCH"
-          
-          echo "New version: $NEW_VERSION"
-          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
-          
-          # Update app.json with new version for this build
-          # Note: This is only for the build artifacts, not committed back to repo
-          node -e "
-            const fs = require('fs');
-            const appJson = JSON.parse(fs.readFileSync('./app.json', 'utf8'));
-            appJson.expo.version = '$NEW_VERSION';
-            fs.writeFileSync('./app.json', JSON.stringify(appJson, null, 2));
-          "
-          
-          # Also update package.json version if it exists
-          if [ -f "package.json" ]; then
-            node -e "
-              const fs = require('fs');
-              const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
-              packageJson.version = '$NEW_VERSION';
-              fs.writeFileSync('./package.json', JSON.stringify(packageJson, null, 2));
-            "
-          fi
-          
-          echo "Version bumped from $CURRENT_VERSION to $NEW_VERSION for this build"
-          
-      - name: Output new version
-        run: |
-          echo "✅ App version bumped to ${{ steps.bump-version.outputs.new_version }}"
-          echo "🚀 Ready for deployment!"
-
   deploy:
     name: Deploy to Expo
     runs-on: ubuntu-latest
-    needs: version-bump
     
     steps:
       - name: Checkout code
@@ -112,3 +48,4 @@ jobs:
           echo "📱 App version: ${{ steps.get-version.outputs.app_version }}"
           echo "🎯 Build profiles: development, preview, production"
           echo "🔗 Check EAS dashboard for build status"
+          
