@@ -18,7 +18,10 @@
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
     "gen": "graphql-codegen",
-    "gen:watch": "graphql-codegen --watch"
+    "gen:watch": "graphql-codegen --watch",
+    "build:android": "eas build --platform android",
+    "build:ios": "eas build --platform ios",
+    "build:all": "eas build --platform all"
   },
   "dependencies": {
     "@react-native-community/netinfo": "11.4.1",
@@ -44,6 +47,7 @@
     "zod": "^4.0.17"
   },
   "devDependencies": {
+    "eas-cli": "^16.17.4",
     "@graphql-codegen/cli": "^5.0.7",
     "@graphql-codegen/typescript": "^4.1.6",
     "@graphql-codegen/typescript-graphql-request": "^6.3.0",

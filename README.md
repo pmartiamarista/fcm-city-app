@@ -504,7 +504,18 @@ npx expo export --platform web
 # Build with specific profile
 npx eas build --platform android --profile production
 npx eas build --platform ios --profile preview
+
+# Using package.json scripts
+yarn build:android
+yarn build:ios
+yarn build:all
 ```
+
+**CI/CD Integration:**
+
+- **GitHub Actions** automatically installs EAS CLI
+- **Build Scripts** ensure consistent build commands
+- **Non-interactive Mode** for automated deployments
 
 ### Distribution
 
